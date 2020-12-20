@@ -1,178 +1,215 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\documentclass{article}
 
-\f0\fs24 \cf0 \\documentclass\{article\}\
-\
-% If you're new to LaTeX, here's some short tutorials:\
-% https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes\
-% https://en.wikibooks.org/wiki/LaTeX/Basics\
-\
-% Formatting\
-\\usepackage[utf8]\{inputenc\}\
-\\usepackage[margin=1in]\{geometry\}\
-\\usepackage[titletoc,title]\{appendix\}\
-\
-% Math\
-% https://www.overleaf.com/learn/latex/Mathematical_expressions\
-% https://en.wikibooks.org/wiki/LaTeX/Mathematics\
-\\usepackage\{amsmath,amsfonts,amssymb,mathtools\}\
-\
-% Images\
-% https://www.overleaf.com/learn/latex/Inserting_Images\
-% https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions\
-\\usepackage\{graphicx,float\}\
-\
-% Tables\
-% https://www.overleaf.com/learn/latex/Tables\
-% https://en.wikibooks.org/wiki/LaTeX/Tables\
-\
-% Algorithms\
-% https://www.overleaf.com/learn/latex/algorithms\
-% https://en.wikibooks.org/wiki/LaTeX/Algorithms\
-\\usepackage[ruled,vlined]\{algorithm2e\}\
-\\usepackage\{algorithmic\}\
-\
-% Code syntax highlighting\
-% https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted\
-\\usepackage\{minted\}\
-\\usemintedstyle\{borland\}\
-\
-% References\
-% https://www.overleaf.com/learn/latex/Bibliography_management_in_LaTeX\
-% https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management\
-\\usepackage\{biblatex\}\
-\\addbibresource\{references.bib\}\
-\
-% Title content\
-\\title\{LO21 - Syst\'e8me expert\}\
-\\author\{Guillaume RUFF & Driss KIHAL\}\
-\\date\{Automne 2020\}\
-\
-\\begin\{document\}\
-\
-\\maketitle\
-\
-% Introduction and Overview\
-\\section\{Introduction\}\
-Un syst\'e8me expert est compos\'e9 d'une base de conaissances, une base de faits et un moteur d'inf\'e9rence.\
-C'est un outil capable de reproduire les m\'e9canismes cognitifs d'un expert, dans un domaine particulier.\
-\
-\
-%  Theoretical Background\
-\\section\{Base de connaissances\}\
-Une base connaissances est une liste de r\'e8gles on ne fait aucune supposition sur leurs v\'e9racit\'e9 en dehors du moteur d'inf\'e9rence et de la base de faits. \
-\\subsection\{R\'e8gle\}\
-On d\'e9fini une r\'e8gle comme une liste de propositions divis\'e9es en 2 parties la pr\'e9misse et la conclusion. \
-\\\\Soit E l'ensemble des propositions de l'univers.\\\\\
-On d\'e9fini une r\'e8gle $\\Gamma$ comme ceci : \
-\
-\\begin\{align*\}\
-    \\Gamma : &(E)^n \\longrightarrow E\\\\ \
-    &(P_1,P_2,...,P_n) \\longmapsto T\
-\\end\{align*\}\
-Soit n $\\in$ N. On d\'e9finit l'application $\\Gamma$ par \
-\\begin\{align*\}\
-    \\forall (P_1,P_2,...,P_n) \\in (E)^n,\\Gamma(P_1,P_2,...,P_n) = P_1\\land P_2 \\land ... \\land P_n = T\
-\\end\{align*\}\
-\
-Avec $T$ la conclusion de la r\'e8gle et $(P_1,P_2,...,P_n)$ les propositions de sa pr\'e9misse.\
-% Algorithm Implementation and Development\
-\\section\{Algorithm Implementation and Development\}\
-Add your algorithm implementation and development here. See Algorithm~\\ref\{alg:example\} for how to include an algorithm in your document. This is how to make an \\textit\{ordered\} list:\
-\\begin\{enumerate\}\
-    \\item Fluffy swallowed a marble.\
-    \\item I took Fluffy to the vet.\
-    \\item They took an ultrasound of Fluffy's intestines.\
-\\end\{enumerate\}\
-\
-\\begin\{algorithm\}\
-\\begin\{algorithmic\}\
-    \\STATE\{Import data from \\texttt\{Testdata.mat\}\}\
-    \\FOR\{$j = 1:20$\}\
-        \\STATE\{Extract measurement $j$ from \\texttt\{Undata\}\}\
-        \\STATE\{Do something useful\}\
-    \\ENDFOR\
-    \\IF\{$i\\geq 5$\} \
-        \\STATE\{$i\\gets i-1$\}\
-    \\ELSE\
-        \\IF\{$i\\leq 3$\}\
-            \\STATE\{$i\\gets i+2$\}\
-        \\ENDIF\
-    \\ENDIF \
-\\end\{algorithmic\}\
-\\caption\{Example Algorithm\}\
-\\label\{alg:example\}\
-\\end\{algorithm\}\
-\
-% Computational Results\
-\\section\{Computational Results\}\
-Add your computational results here. See Table~\\ref\{tab:mascots\} for how to include a table in your document. See Figure~\\ref\{fig:dubs\} for how to include figures in your document.\
-\
-\\begin\{table\}\
-    \\centering\
-    \\begin\{tabular\}\{rll\}\
-    & Name & Years \\\\\
-    \\hline\
-    1 & Frosty & 1922-1930  \\\\\
-    2 & Frosty II & 1930-1936 \\\\\
-    3 & Wasky & 1946 \\\\\
-    4 & Wasky II & 1947 \\\\\
-    5 & Ski & 1954 \\\\\
-    6 & Denali & 1958 \\\\\
-    7 & King Chinook & 1959-1968\\\\\
-    8 & Regent Denali & 1969 \\\\\
-    9 & Sundodger Denali & 1981-1992 \\\\\
-    10 & King Redoubt & 1992-1998 \\\\\
-    11 & Prince Redoubt & 1998 \\\\\
-    12 & Spirit & 1999-2008 \\\\\
-    13 & Dubs I & 2009-2018 \\\\\
-    14 & Dubs II & 2018-Present\
-    \\end\{tabular\}\
-\
-    \\label\{tab:mascots\}\
-\\end\{table\}\
-\
-% begin\{figure\}[tb] % t = top, b = bottom, etc.\
-\\begin\{figure\}\
-    \\centering\
-    \\includegraphics[width=0.5\\linewidth]\{dubs.jpg\}\
-    \\caption\{Here is a picture of Dubs \\cite\{webeck_2018\}. Dubs did not swallow a marble.\}\
-    \\label\{fig:dubs\}\
-\\end\{figure\}\
-\
-% Summary and Conclusions\
-\\section\{Summary and Conclusions\}\
-Add your summary and conclusions here.\
-\
-% References\
-\\printbibliography\
-\
-% Appendices\
-\\begin\{appendices\}\
-\
-% MATLAB Functions\
-\\section\{MATLAB Functions\}\
-Add your important MATLAB functions here with a brief implementation explanation. This is how to make an \\textbf\{unordered\} list:\
-\\begin\{itemize\}\
-    \\item \\texttt\{y = linspace(x1,x2,n)\} returns a row vector of \\texttt\{n\} evenly spaced points between \\texttt\{x1\} and \\texttt\{x2\}. \
-    \\item \\texttt\{[X,Y] = meshgrid(x,y)\} returns 2-D grid coordinates based on the coordinates contained in the vectors \\texttt\{x\} and \\texttt\{y\}. \\text\{X\} is a matrix where each row is a copy of \\texttt\{x\}, and \\texttt\{Y\} is a matrix where each column is a copy of \\texttt\{y\}. The grid represented by the coordinates \\texttt\{X\} and \\texttt\{Y\} has \\texttt\{length(y)\} rows and \\texttt\{length(x)\} columns.  \
-\\end\{itemize\}\
-\
-% MATLAB Codes\
-\\section\{MATLAB Code\}\
-Add your MATLAB code here. This section will not be included in your page limit of six pages.\
-\
-\\begin\{listing\}[h]\
-\\inputminted\{matlab\}\{example.m\}\
-\\caption\{Example code from external file.\}\
-\\label\{listing:examplecode\}\
-\\end\{listing\}\
-\
-\\end\{appendices\}\
-\
-\\end\{document\}\
-}
+% If you're new to LaTeX, here's some short tutorials:
+% https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes
+% https://en.wikibooks.org/wiki/LaTeX/Basics
+
+% Formatting
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+
+% Math
+% https://www.overleaf.com/learn/latex/Mathematical_expressions
+% https://en.wikibooks.org/wiki/LaTeX/Mathematics
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+
+% Images
+% https://www.overleaf.com/learn/latex/Inserting_Images
+% https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+\usepackage{graphicx,float}
+
+% Tables
+% https://www.overleaf.com/learn/latex/Tables
+% https://en.wikibooks.org/wiki/LaTeX/Tables
+
+% Algorithms
+% https://www.overleaf.com/learn/latex/algorithms
+% https://en.wikibooks.org/wiki/LaTeX/Algorithms
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{algorithmic}
+
+% Code syntax highlighting
+% https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted
+\usepackage{minted}
+\usemintedstyle{borland}
+
+% References
+% https://www.overleaf.com/learn/latex/Bibliography_management_in_LaTeX
+% https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+% Title content
+\title{LO21 - Système expert}
+\author{Guillaume RUFF & Driss KIHAL}
+\date{Automne 2020}
+
+\begin{document}
+
+\maketitle
+
+% Introduction and Overview
+\section{Introduction}
+Un système expert est composé d'une base de conaissances, une base de faits et un moteur d'inférence.
+C'est un outil capable de reproduire les mécanismes cognitifs d'un expert, dans un domaine particulier.
+
+%  Theoretical Background
+\section{Definition des composants du système expert}
+Nous allons définir les composants d'un système expert dans les prochaines sections.
+\subsection{Proposition}
+Une proposition est composée de son identifiant et de sa valeur, son identifiant l'identifie parmis d'autres propositions sa valeur est soit vraie soit fausse mais ne peut pas être les deux à la fois. \\
+Son identifiant peut-être une chaînes de caractères ou autre en tout cas , il est unique.
+\subsection{Règle}
+On défini une règle comme une liste de propositions divisées en 2 parties la prémisse et la conclusion qui est toujours le dernier élément de cette liste. 
+\\Soit E l'ensemble des propositions de l'univers.\\
+
+On peut aussi définir une règle $\Gamma$ comme ceci : 
+
+\begin{align*}
+    \Gamma : &(E)^n \longrightarrow E\\ 
+    &(P_1,P_2,...,P_n) \longmapsto T
+\end{align*}
+Soit n $\in$ N. On définit l'application $\Gamma$ par 
+\begin{align*}
+    \forall (P_1,P_2,...,P_n) \in (E)^n,\Gamma(P_1,P_2,...,P_n) = P_1\land P_2 \land ... \land P_n = T
+\end{align*}
+
+Avec $T$ la conclusion de la règle et $(P_1,P_2,...,P_n)$ les propositions de sa prémisse.\\
+
+
+Cette définition certes rasoir permet une meilleur vue de ce que peut-être une règle cependant elle n'est pas adaptée à l'algorihtmique et ses implémentations.\\
+Nous utiliserons alors la définition suivante se rapprochant de celle du cours : \\
+\\
+\underline{Constructeurs} : 
+
+\begin{itemize}
+    \item créerRègleVide (Chaîne de caractères) $\longrightarrow$ (Règle)
+\end{itemize}
+\\
+\underline{Modificateurs} : 
+\\  
+
+\begin{itemize}
+    \item ajoutPremisse (Règle X Proposition) $\longrightarrow$ (Règle), ajoute une proposition à la prémisse
+    \item créerConclusion (Règle X Proposition) $\longrightarrow$ (Règle) , ajoute la conclusion
+    \item suppProposition (Règle X chaîne de caractères) $\longrightarrow$ (Règle) , supprime une proposition de la prémisse
+\end{itemize}
+\\
+\underline{Observateurs et méthodes d'accès}
+\begin{itemize}
+    \item estVideRègle (Règle) $\longrightarrow$ (Booléen), vérifie si la règle est vide
+    \item têteRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la tête de la règle
+    \item queueRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la queue de la règle
+    \item succ (Proposition) $\longrightarrow$ (Proposition) , renvoi l'élément suivant de l'élément courant
+    \item id (Règle $\longrightarrow$ (Chaîne de caractères), renvoi l'identifiant de la Règle
+\end{itemize}
+
+\subsection{Definition de la base de connaissances}
+Une base connaissances est une liste de règles on ne fait aucune supposition sur leurs véracité en dehors du moteur d'inférence et de la base de faits.
+Elle contient l'ensemble des règles du problème.
+\\Voici la définition du type abstrait "Liste de règles" : \\
+Une liste de règles est une suite de règles chacune ayant un successeur et un prédecesseur sauf respectivement pour la tête (la première règle) et la queue (la dernière règle).
+
+\subsection{Definition de la base de faits}
+Une base de faits est une liste de propositions logiques, elle reprend la même définition qu'une liste de règles à la seul différence que tout les élements de cette liste sont des propositions.
+
+\subsection{Definition d'un moteur d'inférence}
+Un moteur d'inférence a pour objectif de déduire de la base de connaissances et de la base de faits, des faits certains.
+C'est donc une fonction prenant en entrée une liste de règles et une liste de propositions vraie et sortant une liste de faits certains.
+
+% Algorithm Implementation and Development
+\section{Algorithmes et raisonnements}
+Dans cette sections nous écrirons les algorithmes utiles au fonctionnement du système expert. Ils auront cette structure générique : 
+
+\subsection{Algorithmes et Règles}
+Ici sont écrits tout les algorithmes régissants les règles du système expert (voir section 2.2).
+\subsubsection{\underline{Contructeurs}}
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{id : [Chaîne de caractères]}
+    \KwResult{R : [Règle]}
+    R $\longleftarrow$ RègleVide\\
+    id(R) $\longleftarrow$ id\\
+    créerRègleVide $\longleftarrow$ R 
+    \caption{créerRègleVide}
+    
+
+\end{algorithm}
+
+\subsubsection{\underline{Modificateurs}}
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle], P : [Proposition]}
+    \KwResult{R : Règle}
+    
+    \caption{ajoutPremisse}
+\end{algorithm}
+
+% Computational Results
+\section{Computational Results}
+Add your computational results here. See Table~\ref{tab:mascots} for how to include a table in your document. See Figure~\ref{fig:dubs} for how to include figures in your document.
+
+\begin{table}
+    \centering
+    \begin{tabular}{rll}
+    & Name & Years \\
+    \hline
+    1 & Frosty & 1922-1930  \\
+    2 & Frosty II & 1930-1936 \\
+    3 & Wasky & 1946 \\
+    4 & Wasky II & 1947 \\
+    5 & Ski & 1954 \\
+    6 & Denali & 1958 \\
+    7 & King Chinook & 1959-1968\\
+    8 & Regent Denali & 1969 \\
+    9 & Sundodger Denali & 1981-1992 \\
+    10 & King Redoubt & 1992-1998 \\
+    11 & Prince Redoubt & 1998 \\
+    12 & Spirit & 1999-2008 \\
+    13 & Dubs I & 2009-2018 \\
+    14 & Dubs II & 2018-Present
+    \end{tabular}
+
+    \label{tab:mascots}
+\end{table}
+
+% begin{figure}[tb] % t = top, b = bottom, etc.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{dubs.jpg}
+    \caption{Here is a picture of Dubs \cite{webeck_2018}. Dubs did not swallow a marble.}
+    \label{fig:dubs}
+\end{figure}
+
+% Summary and Conclusions
+\section{Summary and Conclusions}
+Add your summary and conclusions here.
+
+% References
+\printbibliography
+
+% Appendices
+\begin{appendices}
+
+% MATLAB Functions
+\section{MATLAB Functions}
+Add your important MATLAB functions here with a brief implementation explanation. This is how to make an \textbf{unordered} list:
+\begin{itemize}
+    \item \texttt{y = linspace(x1,x2,n)} returns a row vector of \texttt{n} evenly spaced points between \texttt{x1} and \texttt{x2}. 
+    \item \texttt{[X,Y] = meshgrid(x,y)} returns 2-D grid coordinates based on the coordinates contained in the vectors \texttt{x} and \texttt{y}. \text{X} is a matrix where each row is a copy of \texttt{x}, and \texttt{Y} is a matrix where each column is a copy of \texttt{y}. The grid represented by the coordinates \texttt{X} and \texttt{Y} has \texttt{length(y)} rows and \texttt{length(x)} columns.  
+\end{itemize}
+
+% MATLAB Codes
+\section{MATLAB Code}
+Add your MATLAB code here. This section will not be included in your page limit of six pages.
+
+\begin{listing}[h]
+\inputminted{matlab}{example.m}
+\caption{Example code from external file.}
+\label{listing:examplecode}
+\end{listing}
+
+\end{appendices}
+
+\end{document}
