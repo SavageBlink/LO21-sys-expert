@@ -31,6 +31,11 @@ typedef struct ruleElem{
 typedef ruleElement * Rule;
 
 /**
+*@brief create an empty proposition
+*/
+Proposition createEmptyProposition();
+
+/**
 *@brief create an empty rule
 */
 Rule createEmptyRule();
