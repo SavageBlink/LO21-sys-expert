@@ -33,7 +33,7 @@ typedef ruleElement * Rule;
 /**
 *@brief create an empty rule
 */
-Rule createEmptyList();
+Rule createEmptyRule();
 
 /**
 *@brief add a proposition to the premisse of a rule
