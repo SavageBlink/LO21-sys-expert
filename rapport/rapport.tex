@@ -61,16 +61,16 @@ Nous allons définir les composants d'un système expert dans les prochaines sec
 Une proposition est composée de son identifiant et de sa valeur, son identifiant l'identifie parmis d'autres propositions sa valeur est soit vraie soit fausse mais ne peut pas être les deux à la fois. \\
 Son identifiant peut-être une chaînes de caractères ou autre en tout cas , il est unique.
 \subsection{Règle}
-On défini une règle comme une liste de propositions divisées en 2 parties la prémisse et la conclusion qui est toujours le dernier élément de cette liste. 
+On défini une règle comme une liste de propositions divisées en 2 parties la prémisse et la conclusion qui est toujours le dernier élément de cette liste.
 \\Soit E l'ensemble des propositions de l'univers.\\
 
-On peut aussi définir une règle $\Gamma$ comme ceci : 
+On peut aussi définir une règle $\Gamma$ comme ceci :
 
 \begin{align*}
-    \Gamma : &(E)^n \longrightarrow E\\ 
+    \Gamma : &(E)^n \longrightarrow E\\
     &(P_1,P_2,...,P_n) \longmapsto T
 \end{align*}
-Soit n $\in$ N. On définit l'application $\Gamma$ par 
+Soit n $\in$ N. On définit l'application $\Gamma$ par
 \begin{align*}
     \forall (P_1,P_2,...,P_n) \in (E)^n,\Gamma(P_1,P_2,...,P_n) = P_1\land P_2 \land ... \land P_n = T
 \end{align*}
@@ -81,28 +81,28 @@ Avec $T$ la conclusion de la règle et $(P_1,P_2,...,P_n)$ les propositions de s
 Cette définition certes rasoir permet une meilleur vue de ce que peut-être une règle cependant elle n'est pas adaptée à l'algorihtmique et ses implémentations.\\
 Nous utiliserons alors la définition suivante se rapprochant de celle du cours : \\
 \\
-\underline{Constructeurs} : 
+\underline{Constructeurs} :
 
 \begin{itemize}
     \item créerRègleVide (Chaîne de caractères) $\longrightarrow$ (Règle)
 \end{itemize}
 \\
-\underline{Modificateurs} : 
-\\  
+\underline{Modificateurs} :
+\\
 
 \begin{itemize}
     \item ajoutPremisse (Règle X Proposition) $\longrightarrow$ (Règle), ajoute une proposition à la prémisse
     \item créerConclusion (Règle X Proposition) $\longrightarrow$ (Règle) , ajoute la conclusion
     \item suppProposition (Règle X chaîne de caractères) $\longrightarrow$ (Règle) , supprime une proposition de la prémisse
-\end{itemize}
-\\
+\end{itemize}\\
 \underline{Observateurs et méthodes d'accès}
 \begin{itemize}
     \item estVideRègle (Règle) $\longrightarrow$ (Booléen), vérifie si la règle est vide
+    \item estVidePrémisse (Règle) $\longrightarrow$ (Booléen), vérifie si la prémisse d'une règle est vide
     \item têteRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la tête de la règle
     \item queueRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la queue de la règle
     \item succ (Proposition) $\longrightarrow$ (Proposition) , renvoi l'élément suivant de l'élément courant
-    \item id (Règle $\longrightarrow$ (Chaîne de caractères), renvoi l'identifiant de la Règle
+    \item TestPremisseR (Règle X Proposition)$\longrightarrow$ (Booléen), vérifie si propostion donnée en argument est contenu dans la premisse de la règle
 \end{itemize}
 
 \subsection{Definition de la base de connaissances}
@@ -120,30 +120,181 @@ C'est donc une fonction prenant en entrée une liste de règles et une liste de 
 
 % Algorithm Implementation and Development
 \section{Algorithmes et raisonnements}
-Dans cette sections nous écrirons les algorithmes utiles au fonctionnement du système expert. Ils auront cette structure générique : 
+Dans cette sections nous écrirons les algorithmes utiles au fonctionnement du système expert. Ils auront cette structure générique :
 
 \subsection{Algorithmes et Règles}
 Ici sont écrits tout les algorithmes régissants les règles du système expert (voir section 2.2).
 \subsubsection{\underline{Contructeurs}}
 \begin{algorithm}
     \SetAlgoLined
-    \KwData{id : [Chaîne de caractères]}
     \KwResult{R : [Règle]}
     R $\longleftarrow$ RègleVide\\
-    id(R) $\longleftarrow$ id\\
-    créerRègleVide $\longleftarrow$ R 
+    créerRègleVide $\longleftarrow$ R
     \caption{créerRègleVide}
-    
-
 \end{algorithm}
+
 
 \subsubsection{\underline{Modificateurs}}
 \begin{algorithm}
     \SetAlgoLined
     \KwData{R : [Règle], P : [Proposition]}
     \KwResult{R : Règle}
-    
+
+    \begin{algorithmic}
+
+         \IF{non(estVide(R))} \THEN
+            \IF{estVide(Premisse(R))} \THEN
+                \STATE $Premisse(R) \gets P$
+            \ELSE
+                \IF{estVide(succ(Premisse(R)))} \THEN
+                    \STATE $succ(Premisse(R)) \gets P$
+                \ELSE
+                    \STATE $p \gets PropositionVide$
+                    \STATE $p \gets Premisse(R)$
+                    \WHILE{succ(succ(p)) != INDEFINI}
+                        \STATE $p \gets succ(p)$
+                    \ENDWHILE
+                    \STATE $succ(succ(p)) \gets succ(p)$
+                    \STATE $succ(p) \gets P$
+                \ENDIF
+            \ENDIF
+         \ENDIF
+         \STATE $ajoutPremisse \gets R$
+    \end{algorithmic}
     \caption{ajoutPremisse}
 \end{algorithm}
 
+
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle], id : [Chaîne de caractères]}
+    \KwResult{[Règle]}
+
+    \begin{algorithmic}
+
+        \STATE $p \gets [Règle] : R$
+
+        \IF{estVideRègle(R)}
+            \STATE $suppProposition \gets R$
+        \ELSE
+            \IF{preVide(R)}
+                \STATE $suppProposition \gets R$
+            \ELSE
+                \WHILE{id(succ(e)) $\ne$ id}
+                    \STATE $e \gets succ(e)$
+                \ENDWHILE
+                \STATE $succ(e) \gets succ(succ(e))$
+
+                \STATE $suppProposition \gets R$
+            \ENDIF
+        \ENDIF
+
+    \end{algorithmic}
+    \caption{suppProposition}
+\end{algorithm}
+
+\subsubsection{\underline{Observateurs}}
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle]}
+    \KwResult{[Booléen]}
+
+    \begin{algorithmic}
+
+        \STATE $p \gets [Règle] : R$
+        \STATE $b : \gets [Booléen] : Vrai$
+        \WHILE{succ(p) $\ne$ INDEFINI}
+            \IF{p $\ne$ INDEFINI}
+                \STATE $b \gets Faux$
+            \ENDIF
+            \STATE $p \gets succ(p)$
+        \ENDWHILE
+        \STATE $estVideRègle \gets b$
+
+    \end{algorithmic}
+    \caption{estVideRègle}
+\end{algorithm}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle]}
+    \KwResult{[booléen]}
+
+    \begin{algorithmic}
+        \STATE $p \gets [Règle] : R$
+        \IF{estVideRègle(R)}
+            \STATE $estVidePrémisse \gets Vrai$
+        \ELSE
+            \IF{succ(p) = INDEFINI}
+                \STATE $estVidePrémisse \gets Vrai$
+            \ELSE
+                \STATE $estVidePrémisse \gets Faux$
+            \ENDIF
+        \ENDIF
+
+    \end{algorithmic}
+    \caption{estVidePrémisse}
+\end{algorithm}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle]}
+    \KwResult{[Proposition]}
+
+    \begin{algorithmic}
+        \IF{non(estVidePrémisse(R)}
+            \STATE $têteRègle \gets R$
+        \ELSE
+            \STATE $têteRègle \gets INDEFINI$
+        \ENDIF
+
+    \end{algorithmic}
+    \caption{têteRègle}
+\end{algorithm}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle]}
+    \KwResult{[Proposition]}
+
+    \begin{algorithmic}
+        \STATE $p \gets [Règle] : R$
+        \IF{non(estVidePrémisse(R)}
+            \WHILE{succ(p) $\ne$ INDEFINI}
+                \STATE $p \gets succ(p)$
+            \ENDWHILE
+            \STATE $queueRègle \gets p$
+        \ELSE
+            \STATE $queueRègle \gets R$
+        \ENDIF
+
+    \end{algorithmic}
+    \caption{queueRègle}
+\end{algorithm}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwData{R : [Règle], P : [Proposition]}
+    \KwResult{B : Booléen}
+
+    \begin{algorithmic}
+
+        \IF{estVideRègle(R) OU estVide(P)} \THEN
+            \STATE $TestPremisseR \gets VRAI$
+        \ENDIF
+        \IF{estVidePrémisse(Premisse(R))} \THEN
+            \STATE $TestPremisseR \gets FAUX$
+        \ELSE
+            \IF{Premisse(P)=P}
+                \STATE $TestPremisseR \gets VRAI$
+            \ELSE
+                \STATE $TestPremisseR \gets TestPremisseR(Reste(R),P)$
+            \ENDIF
+        \ENDIF
+
+
+    \end{algorithmic}
+    \caption{TestPremisseR}
+\end{algorithm}
 \end{document}
