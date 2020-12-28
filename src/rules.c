@@ -92,11 +92,33 @@ Rule* addConclusion(Rule* R, Proposition* P){
 
 Rule* deleteProposition(Rule* R, char * id){
   if (R == NULL || id == NULL){
-    fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,P);
+    fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,id);
     return NULL;
   }
-  
+  ruleElement* ElemtoRemove = SearchProposition(R,id);
+  if (ElemtoRemove == headRule(R)){
+    ruleElement* Ptemp = ElemtoRemove->next;
+    /*Voir le free avec driss*/
+   R->head = Ptemp;
+  }else if (ElemtoRemove->next == NULL){
+    /*freezeubi*/
+  }else{
+    ruleElement* Ptemp = ElemtoRemove->next;
+    ruleElement* Prev = getprevious(R,ElemtoRemove);
+    /*free stuff voir avec driss*/
+    Prev->next = Ptemp;
+  }return R;
+}
 
+ruleElement* getprevious(Rule* R,ruleElement* Elem){
+  if (R == NULL || Elem == NULL){
+    fprintf(stderr,"You passed R = %p and id = %p one is null in getprevious \n",R,Elem);
+    return NULL;
+  }
+  ruleElement* p = headRule(R);
 
-
+  while(p->next != Elem){
+    p = p->next;
+  }
+  return p;
 }

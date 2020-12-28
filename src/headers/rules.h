@@ -59,6 +59,12 @@ Rule* addConclusion(Rule* R, Proposition* P);
 Rule* deleteProposition(Rule* R, char * id);
 
 /**
+*@brief Search a proposition with a given id from a rule, and return a 
+pointer on the element
+*/
+ruleElement* SearchProposition(Rule* R, char * id);
+
+/**
 *@brief verify if a rule is empty
 */
 boolean isEmpty(Rule* R);
@@ -78,5 +84,10 @@ ruleElement* headRule(Rule* R);
 */
 ruleElement* tailRule(Rule* R);
 
+
+/**
+*@brief Give the predecessor of a given Elem from a given rule
+*/
+ruleElement* getprevious(Rule* R,ruleElement* Elem);
 
 #endif
