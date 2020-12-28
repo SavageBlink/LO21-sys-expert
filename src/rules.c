@@ -23,13 +23,15 @@ boolean isEmpty(Rule R)
   ruleElement E;
   boolean flag = true;
 
-  E = headRule(R);  
+  E = headRule(R); 
+  
   while (E.next != NULL) {
-    if(E != NULL)
+    if(E.value.id != NULL)
     {
       flag = false;
     }
-    E = E.next;
+    E.value = E.next->value;
+    E.next = E.next->next;
   }
   return flag;
 }

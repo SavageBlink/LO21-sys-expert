@@ -68,12 +68,12 @@ boolean isEmptyPre(Rule R);
 /**
 *@brief return first proposition of a rule
 */
-Proposition headRule(Rule R);
+ruleElement headRule(Rule R);
 
 /**
 *@brief return last proposition of a rule
 */
-Proposition tailRule(Rule R);
+ruleElement tailRule(Rule R);
 
 
 #endif
