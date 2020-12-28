@@ -28,52 +28,55 @@ typedef struct ruleElem{
     struct ruleElem * next;
 } ruleElement;
 
-typedef ruleElement * Rule;
+typedef struct rule{
+    ruleElement* head;
+    Proposition Conclusion;
+} Rule;
 
 /**
 *@brief create an empty proposition
 */
-Proposition createEmptyProposition();
+Proposition* createEmptyProposition();
 
 /**
 *@brief create an empty rule
 */
-Rule createEmptyRule();
+Rule* createEmptyRule();
 
 /**
 *@brief add a proposition to the premisse of a rule
 */
-Rule addPremisse(Rule R, Proposition P);
+Rule* addPremisse(Rule* R, Proposition P);
 
 /**
 *@brief create and assign the final proposition (conclusion) of a rule
 */
-Rule addConclusion(Rule R, Proposition P);
+Rule* addConclusion(Rule* R, Proposition P);
 
 /**
 *@brief delete a proposition from the premisse of a rule
 */
-Rule deleteProposition(Rule R, char * id);
+Rule* deleteProposition(Rule* R, char * id);
 
 /**
 *@brief verify if a rule is empty
 */
-boolean isEmpty(Rule R);
+boolean isEmpty(Rule* R);
 
 /**
 *@brief verify if the premisse of a rule is empty
 */
-boolean isEmptyPre(Rule R);
+boolean isEmptyPre(Rule* R);
 
 /**
 *@brief return first proposition of a rule
 */
-ruleElement headRule(Rule R);
+ruleElement* headRule(Rule* R);
 
 /**
 *@brief return last proposition of a rule
 */
-ruleElement tailRule(Rule R);
+ruleElement* tailRule(Rule* R);
 
 
 #endif
