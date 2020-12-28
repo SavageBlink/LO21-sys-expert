@@ -25,7 +25,7 @@ typedef struct prop{
 
 typedef struct ruleElem{
     Proposition value;
-    struct Proposition * next;
+    struct ruleElem * next;
 } ruleElement;
 
 typedef ruleElement * Rule;
