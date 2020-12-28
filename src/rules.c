@@ -8,13 +8,14 @@
 #include <stdlib.h>
 Proposition createEmptyProposition()
 {
-  Proposition P;
+  Proposition* P = (Proposition*) malloc(sizeof(Proposition));
+  P->id = (char*) malloc(15*sizeof(char));
   return P;
 }
 
 Rule createEmptyRule()
 {
-  Rule R;
+  Rule* R = (Rule*) malloc(sizeof(Rule));
   return R;
 }
 
