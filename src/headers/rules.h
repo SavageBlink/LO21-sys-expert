@@ -24,13 +24,13 @@ typedef struct prop{
 */
 
 typedef struct ruleElem{
-    Proposition value;
+    Proposition* value;
     struct ruleElem * next;
 } ruleElement;
 
 typedef struct rule{
     ruleElement* head;
-    Proposition Conclusion;
+    Proposition* Conclusion;
 } Rule;
 
 /**
@@ -46,12 +46,12 @@ Rule* createEmptyRule();
 /**
 *@brief add a proposition to the premisse of a rule
 */
-Rule* addPremisse(Rule* R, Proposition P);
+Rule* addPremisse(Rule* R, Proposition* P);
 
 /**
 *@brief create and assign the final proposition (conclusion) of a rule
 */
-Rule* addConclusion(Rule* R, Proposition P);
+Rule* addConclusion(Rule* R, Proposition* P);
 
 /**
 *@brief delete a proposition from the premisse of a rule

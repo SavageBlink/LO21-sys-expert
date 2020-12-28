@@ -43,7 +43,7 @@ boolean isEmpty(Rule* R)
   E = *headRule(R); 
   
   while (E.next != NULL) {
-    if(E.value.id != NULL)
+    if(E.value->id != NULL)
     {
       flag = false;
     }
@@ -51,4 +51,52 @@ boolean isEmpty(Rule* R)
     E.next = E.next->next;
   }
   return flag;
+}
+
+
+Rule* addPremisse(Rule* R, Proposition* P){
+  //Checking input
+  if (R == NULL || P == NULL){
+    fprintf(stderr,"You passed R = %p and P = %p one is null in addPremisse \n",R,P);
+    return NULL;
+  }
+  //Generating the new elemement from the Given proposition
+  ruleElement* Newelem = (ruleElement*) malloc (sizeof(ruleElement));
+  if (Newelem == NULL) {
+    fprintf(stderr,"There is an memorry allocation error in add premisse for R = %p and P = %p in addPremisse \n",R,P);
+    return NULL;
+  }
+  ruleElement* Rtail = tailRule(R); //getting the tail
+  //Attribuing the value to the newel
+  Newelem->value = P;
+  Newelem->next = NULL;
+
+  //Adding it to the list
+  if (Rtail == NULL){
+    R->head = Newelem;
+  }else{
+    Rtail->next = Newelem;
+  }
+  return R;
+}
+
+
+Rule* addConclusion(Rule* R, Proposition* P){
+  if (R == NULL || P == NULL){
+    fprintf(stderr,"You passed R = %p and P = %p one is null in addConclusion \n",R,P);
+    return NULL;
+  }
+ R->Conclusion = P;
+ return R;
+}
+
+Rule* deleteProposition(Rule* R, char * id){
+  if (R == NULL || id == NULL){
+    fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,P);
+    return NULL;
+  }
+  
+
+
+
 }
