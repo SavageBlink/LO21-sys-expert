@@ -4,8 +4,8 @@
  * @date 21 december 2020
  * @brief source file of rules and propositions ,it define constructors, modifiers and observers algorithms of a rule.
  */
- #include "headers/rules.h"
-
+#include "headers/rules.h"
+#include <stdlib.h>
 Proposition createEmptyProposition()
 {
   Proposition P;
@@ -23,7 +23,7 @@ boolean isEmpty(Rule R)
   ruleElement E;
   boolean flag = true;
 
-  E = R;
+  E = headRule(R);  
   while (E.next != NULL) {
     if(E != NULL)
     {

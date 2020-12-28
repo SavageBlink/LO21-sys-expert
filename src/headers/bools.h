@@ -8,7 +8,7 @@
 #ifndef BOOLS
 #define BOOLS
 
-#define bool unsigned int
+#define boolean unsigned int
 
 #define true 1
 

@@ -16,7 +16,7 @@
 */
 typedef struct prop{
     char * id;
-    bool value;
+    boolean value;
 } Proposition;
 
 /**
