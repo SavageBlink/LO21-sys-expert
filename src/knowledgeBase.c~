@@ -1,0 +1,14 @@
+#include "headers/knowledgeBase.h"
+
+KB* createEmptyKB()
+{
+  KB* kb = (KB*)malloc(sizeof(KB));
+  if (kb == NULL)
+    {
+      fprintf(stderr , "Seems there's a memory error while allocation of KB in createEmptyKB");
+      return NULL;
+    }
+  return kb;
+}
+
+KB
