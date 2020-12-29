@@ -58,23 +58,27 @@ KB* addRule(KB* kb, Rule* R)
     }
 }
 
-boolean isEmpty(Rule* R)
-{
-  ruleElement E;
-  boolean flag = true;
-
-  E = *headRule(R); 
-  
-  while (E.next != NULL) {
-    if(E.value->id != NULL)
-    {
-      flag = false;
-    }
-    E.value = E.next->value;
-    E.next = E.next->next;
+boolean isEmpty(Rule* R){
+  if (R== NULL){
+    return true;
+  }else{
+    return false;
   }
-  return flag;
 }
+
+boolean isEmptyPre(Rule* R){
+  if(isEmpty(R)){
+    return true;
+  }
+  if(R->head==NULL){
+    return true;
+  }else{
+    return false;
+  }
+
+
+}
+
 
 ruleElement* headRule(Rule* R)
 {
@@ -142,7 +146,7 @@ boolean searchProposition(Rule* R, char * id)
   
   if(isEmpty(R) || id == NULL)
     {
-      return true;
+      return false;
     }
   if(isEmptyPre(R))
     {
