@@ -110,7 +110,7 @@ Rule* addPremisse(Rule* R, Proposition* P){
     fprintf(stderr,"There is an memorry allocation error in add premisse for R = %p and P = %p in addPremisse \n",R,P);
     return NULL;
   }
-  Proposition* Rtail = tailRule(R); //getting the tail
+  ruleElement* Rtail = tailRule(R); //getting the tail
   //Attribuing the value to the newel
   Newelem->value = P;
   Newelem->next = NULL;
@@ -164,19 +164,20 @@ Rule* deleteProposition(Rule* R, char * id){
     fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,id);
     return NULL;
   }
-  ruleElement* ElemtoRemove = SearchProposition(R,id);
-  if (ElemtoRemove == headRule(R)){
-    ruleElement* Ptemp = ElemtoRemove->next;
-    /*Voir le free avec driss*/
-   R->head = Ptemp;
-  }else if (ElemtoRemove->next == NULL){
-    /*freezeubi*/
-  }else{
-    ruleElement* Ptemp = ElemtoRemove->next;
-    ruleElement* Prev = getprevious(R,ElemtoRemove);
-    /*free stuff voir avec driss*/
-    Prev->next = Ptemp;
-  }return R;
+  ruleElement* Ptemp = headRule(R); //Fetching the head
+  if (strcmp((Ptemp->value)->id ,id)==0) { //If the value is the head
+    R->head = Ptemp->next;
+    free(Ptemp);
+    return R;
+  }
+  while(strcmp((Ptemp->next->value)->id ,id)!=0){
+    Ptemp = Ptemp->next;
+  }
+  //The elem to remove a the end it ptemp->next
+  ruleElement* TempNext = Ptemp->next->next; //We save to keep the next of the elem to remove
+  free(Ptemp->next); // We remove the elem
+  Ptemp->next = TempNext; //We forge back the link
+  return R;
 }
 
 
