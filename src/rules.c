@@ -33,6 +33,8 @@ Rule* createEmptyRule()
     fprintf( stderr ,"Seems there's a an memorry error allocation in createEmptyRules");
     return NULL;
   }
+  R->head = NULL;
+  R->Conclusion =NULL;
   return R;
 }
 
@@ -166,17 +168,18 @@ Rule* deleteProposition(Rule* R, char * id){
   }
   ruleElement* Ptemp = headRule(R); //Fetching the head
   if (strcmp((Ptemp->value)->id ,id)==0) { //If the value is the head
-    R->head = Ptemp->next;
-    free(Ptemp);
-    return R;
+    R->head = Ptemp->next; //The new head is the next elem
+    free(Ptemp); // we free it
+    return R; //done
   }
+  //else we must got trought until we find the value to remove
   while(strcmp((Ptemp->next->value)->id ,id)!=0){
     Ptemp = Ptemp->next;
   }
-  //The elem to remove a the end it ptemp->next
-  ruleElement* TempNext = Ptemp->next->next; //We save to keep the next of the elem to remove
+  //The elem to remove at the end it ptemp->next
+  ruleElement* TempNext = Ptemp->next->next; //We save it to keep the next of the elem to remove
   free(Ptemp->next); // We remove the elem
-  Ptemp->next = TempNext; //We forge back the link
+  Ptemp->next = TempNext;
   return R;
 }
 
