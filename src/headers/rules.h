@@ -29,8 +29,9 @@ typedef struct ruleElem{
 } ruleElement;
 
 typedef struct rule{
-    ruleElement* head;
-    Proposition* Conclusion;
+  ruleElement* head;
+  Proposition* Conclusion;
+  
 } Rule;
 
 /**
@@ -82,7 +83,7 @@ ruleElement* headRule(Rule* R);
 /**
 *@brief return last proposition of a rule
 */
-ruleElement* tailRule(Rule* R);
+Proposition* tailRule(Rule* R);
 
 
 /**

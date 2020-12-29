@@ -7,6 +7,7 @@
 #include "headers/rules.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 Proposition* createEmptyProposition()
 {
@@ -53,6 +54,16 @@ boolean isEmpty(Rule* R)
   return flag;
 }
 
+ruleElement* headRule(Rule* R)
+{
+  return R->head;
+}
+
+Proposition* tailRule(Rule* R)
+{
+  return R->Conclusion;
+}
+
 
 Rule* addPremisse(Rule* R, Proposition* P){
   //Checking input
@@ -66,7 +77,7 @@ Rule* addPremisse(Rule* R, Proposition* P){
     fprintf(stderr,"There is an memorry allocation error in add premisse for R = %p and P = %p in addPremisse \n",R,P);
     return NULL;
   }
-  ruleElement* Rtail = tailRule(R); //getting the tail
+  Proposition* Rtail = tailRule(R); //getting the tail
   //Attribuing the value to the newel
   Newelem->value = P;
   Newelem->next = NULL;
@@ -90,6 +101,31 @@ Rule* addConclusion(Rule* R, Proposition* P){
  return R;
 }
 
+Rule* searchProposition(Rule* R, char * id)
+{
+  boolean b;
+  
+  if(isEmpty(R) || id == NULL)
+    {
+      b = true;
+    }
+  if(isEmptyPre(R))
+    {
+      b = false;
+    }
+  else if((strcmp(headRule(R)->value->id,id) == 0)&&(headRule(R)->next->next == NULL))
+    {
+      b = true;
+    }
+  else
+    {
+      Rule* nR = createEmptyRule();
+      nR->head = headRule(R)->next;
+      addConclusion(nR, R->Conclusion);
+      return searchProposition(nR,id);
+    }
+}
+
 Rule* deleteProposition(Rule* R, char * id){
   if (R == NULL || id == NULL){
     fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,id);
@@ -109,6 +145,7 @@ Rule* deleteProposition(Rule* R, char * id){
     Prev->next = Ptemp;
   }return R;
 }
+
 
 ruleElement* getprevious(Rule* R,ruleElement* Elem){
   if (R == NULL || Elem == NULL){
