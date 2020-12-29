@@ -1,6 +1,6 @@
 /**
  * @file rules.h
- * @author Driss/SavageBlink
+ * @author Guillaume/Hendercraft Driss/SavageBlink
  * @date 21 december 2020
  * @brief header file of rules and propositions ,it also initialize constructors, modifiers and observers algorithms of a rule.
  */
@@ -35,60 +35,84 @@ typedef struct rule{
 } Rule;
 
 /**
-*@brief create an empty proposition
+ *Define a Knowledge Base which is implemented as a symply linked-list of rules.
+ */
+typedef struct KBElem{
+  Rule*  KBrule;
+  struct KBElem * next;
+} KB;
+
+/**
+* @brief create an empty proposition
 */
 Proposition* createEmptyProposition();
 
 /**
-*@brief create an empty rule
+* @brief create an empty rule
 */
 Rule* createEmptyRule();
 
 /**
-*@brief add a proposition to the premisse of a rule
+* @brief add a proposition to the premisse of a rule
 */
 Rule* addPremisse(Rule* R, Proposition* P);
 
 /**
-*@brief create and assign the final proposition (conclusion) of a rule
+* @brief create and assign the final proposition (conclusion) of a rule
 */
 Rule* addConclusion(Rule* R, Proposition* P);
 
 /**
-*@brief delete a proposition from the premisse of a rule
+* @brief delete a proposition from the premisse of a rule
 */
 Rule* deleteProposition(Rule* R, char * id);
 
 /**
-*@brief Search a proposition with a given id from a rule, and return a 
+* @brief Search a proposition with a given id from a rule, and return a 
 pointer on the element
 */
-ruleElement* SearchProposition(Rule* R, char * id);
+boolean SearchProposition(Rule* R, char * id);
 
 /**
-*@brief verify if a rule is empty
+* @brief verify if a rule is empty
 */
 boolean isEmpty(Rule* R);
 
 /**
-*@brief verify if the premisse of a rule is empty
+* @brief verify if the premisse of a rule is empty
 */
 boolean isEmptyPre(Rule* R);
 
 /**
-*@brief return first proposition of a rule
+* @brief return first proposition of a rule
 */
 ruleElement* headRule(Rule* R);
 
 /**
-*@brief return last proposition of a rule
+* @brief return last proposition of a rule
 */
-Proposition* tailRule(Rule* R);
-
+ruleElement* tailRule(Rule* R);
 
 /**
-*@brief Give the predecessor of a given Elem from a given rule
+* @brief Give the predecessor of a given Elem from a given rule
 */
 ruleElement* getprevious(Rule* R,ruleElement* Elem);
 
+/**
+ * @brief  create an empty KB
+ */
+
+KB* createEmptyKB();
+
+/**
+ * @brief Add a new rule at the end of a KB
+ */
+
+KB* addRule(KB* kb, Rule* R);
+
+/**
+ * @brief Return a pointer to the first rule of a KB
+ */
+
+Rule* headKB(KB* kb);
 #endif

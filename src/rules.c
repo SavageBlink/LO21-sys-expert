@@ -36,6 +36,26 @@ Rule* createEmptyRule()
   return R;
 }
 
+KB* createEmptyKB()
+{
+  KB* kb = (KB*)malloc(sizeof(KB));
+  if (kb == NULL)
+    {
+      fprintf(stderr , "Seems there's a memory error while allocation of KB in createEmptyKB");
+      return NULL;
+    }
+  return kb;
+}
+
+KB* addRule(KB* kb, Rule* R)
+{
+  if(kb == NULL || R == NULL)
+    {
+      fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",kb,R);
+      return NULL;
+    }
+}
+
 boolean isEmpty(Rule* R)
 {
   ruleElement E;
@@ -59,9 +79,22 @@ ruleElement* headRule(Rule* R)
   return R->head;
 }
 
-Proposition* tailRule(Rule* R)
+ruleElement* tailRule(Rule* R)
 {
-  return R->Conclusion;
+  ruleElement* E;
+  if(isEmpty(R))
+    {
+      return NULL;
+    }
+  else
+    {
+      E = headRule(R);
+      while(E->next != NULL)
+	{
+	  E = E->next;
+	}
+      return E;
+    }
 }
 
 
@@ -101,21 +134,21 @@ Rule* addConclusion(Rule* R, Proposition* P){
  return R;
 }
 
-Rule* searchProposition(Rule* R, char * id)
+boolean searchProposition(Rule* R, char * id)
 {
-  boolean b;
+  
   
   if(isEmpty(R) || id == NULL)
     {
-      b = true;
+      return true;
     }
   if(isEmptyPre(R))
     {
-      b = false;
+      return false;
     }
-  else if((strcmp(headRule(R)->value->id,id) == 0)&&(headRule(R)->next->next == NULL))
+  else if(strcmp(headRule(R)->value->id,id) == 0)
     {
-      b = true;
+      return true;
     }
   else
     {
