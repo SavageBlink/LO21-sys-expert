@@ -1,6 +1,6 @@
 /**
  * @file rules.c
- * @author Driss/SavageBlink
+ * @author Guillaume/Hendercraft Driss/SavageBlink
  * @date 21 december 2020
  * @brief source file of rules and propositions ,it define constructors, modifiers and observers algorithms of a rule.
  */
@@ -33,26 +33,52 @@ Rule* createEmptyRule()
     fprintf( stderr ,"Seems there's a an memorry error allocation in createEmptyRules");
     return NULL;
   }
+  R->head = NULL;
+  R->Conclusion =NULL;
   return R;
 }
 
-boolean isEmpty(Rule* R)
+KB* createEmptyKB()
 {
-  ruleElement E;
-  boolean flag = true;
-
-  E = *headRule(R); 
-  
-  while (E.next != NULL) {
-    if(E.value->id != NULL)
+  KB* kb = (KB*)malloc(sizeof(KB));
+  if (kb == NULL)
     {
-      flag = false;
+      fprintf(stderr , "Seems there's a memory error while allocation of KB in createEmptyKB");
+      return NULL;
     }
-    E.value = E.next->value;
-    E.next = E.next->next;
-  }
-  return flag;
+  return kb;
 }
+
+KB* addRule(KB* kb, Rule* R)
+{
+  if(kb == NULL || R == NULL)
+    {
+      fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",kb,R);
+      return NULL;
+    }
+}
+
+boolean isEmpty(Rule* R){
+  if (R== NULL){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+boolean isEmptyPre(Rule* R){
+  if(isEmpty(R)){
+    return true;
+  }
+  if(R->head==NULL){
+    return true;
+  }else{
+    return false;
+  }
+
+
+}
+
 
 ruleElement* headRule(Rule* R)
 {
@@ -110,14 +136,14 @@ Rule* addConclusion(Rule* R, Proposition* P){
     fprintf(stderr,"You passed R = %p and P = %p one is null in addConclusion \n",R,P);
     return NULL;
   }
- R->Conclusion = P;
- return R;
+  R->Conclusion = P;
+  return R;
 }
 
 boolean searchProposition(Rule* R, char * id)
 {
-  
-  
+
+
   if(isEmpty(R) || id == NULL)
     {
       return false;
@@ -146,17 +172,18 @@ Rule* deleteProposition(Rule* R, char * id){
   }
   ruleElement* Ptemp = headRule(R); //Fetching the head
   if (strcmp((Ptemp->value)->id ,id)==0) { //If the value is the head
-    R->head = Ptemp->next;
-    free(Ptemp);
-    return R;
+    R->head = Ptemp->next; //The new head is the next elem
+    free(Ptemp); // we free it
+    return R; //done
   }
+  //else we must got trought until we find the value to remove
   while(strcmp((Ptemp->next->value)->id ,id)!=0){
     Ptemp = Ptemp->next;
   }
-  //The elem to remove a the end it ptemp->next
-  ruleElement* TempNext = Ptemp->next->next; //We save to keep the next of the elem to remove
+  //The elem to remove at the end it ptemp->next
+  ruleElement* TempNext = Ptemp->next->next; //We save it to keep the next of the elem to remove
   free(Ptemp->next); // We remove the elem
-  Ptemp->next = TempNext; //We forge back the link
+  Ptemp->next = TempNext;
   return R;
 }
 
