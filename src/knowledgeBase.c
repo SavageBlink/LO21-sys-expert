@@ -25,7 +25,7 @@ KB* addRule(KB* kb, Rule* R)
   newel->next = NULL;
   if(kb == NULL || R == NULL)
     {
-      fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",kb,R);
+      fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",(void *) kb,(void *) R);
       return NULL;
     }
   else

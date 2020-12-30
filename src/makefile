@@ -3,8 +3,8 @@ SOURCE	= main.c knowledgeBase.c rules.c
 HEADER	= bool.h knowledgeBase.h rules.h
 OUT	= a.out
 CC	 = gcc
-FLAGS	 = -g -c -Wall
-LFLAGS	 = 
+FLAGS	 = -g -c -Wall -fpic -pedantic -Werror
+LFLAGS	 = -Wall -fpic -pedantic -ANSI -Werror 
 
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)

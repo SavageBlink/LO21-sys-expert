@@ -92,13 +92,13 @@ ruleElement* tailRule(Rule* R)
 Rule* addPremisse(Rule* R, Proposition* P){
   //Checking input
   if (R == NULL || P == NULL){
-    fprintf(stderr,"You passed R = %p and P = %p one is null in addPremisse \n",R,P);
+    fprintf(stderr,"You passed R = %p and P = %p one is null in addPremisse \n",(void *) R,(void *) P);
     return NULL;
   }
   //Generating the new elemement from the Given proposition
   ruleElement* Newelem = (ruleElement*) malloc (sizeof(ruleElement));
   if (Newelem == NULL) {
-    fprintf(stderr,"There is an memorry allocation error in add premisse for R = %p and P = %p in addPremisse \n",R,P);
+    fprintf(stderr,"There is an memorry allocation error in add premisse for R = %p and P = %p in addPremisse \n",(void *) R,(void *) P);
     return NULL;
   }
   ruleElement* Rtail = tailRule(R); //getting the tail
@@ -118,7 +118,7 @@ Rule* addPremisse(Rule* R, Proposition* P){
 
 Rule* addConclusion(Rule* R, Proposition* P){
   if (R == NULL || P == NULL){
-    fprintf(stderr,"You passed R = %p and P = %p one is null in addConclusion \n",R,P);
+    fprintf(stderr,"You passed R = %p and P = %p one is null in addConclusion \n",(void *) R,(void *) P);
     return NULL;
   }
   R->Conclusion = P;
@@ -152,7 +152,7 @@ boolean searchProposition(Rule* R, char * id)
 
 Rule* deleteProposition(Rule* R, char * id){
   if (R == NULL || id == NULL){
-    fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",R,id);
+    fprintf(stderr,"You passed R = %p and id = %p one is null in deleteProposition \n",(void *) R,(void *) id);
     return NULL;
   }
   ruleElement* Ptemp = headRule(R); //Fetching the head
@@ -175,7 +175,7 @@ Rule* deleteProposition(Rule* R, char * id){
 
 ruleElement* getprevious(Rule* R,ruleElement* Elem){
   if (R == NULL || Elem == NULL){
-    fprintf(stderr,"You passed R = %p and id = %p one is null in getprevious \n",R,Elem);
+    fprintf(stderr,"You passed R = %p and id = %p one is null in getprevious \n",(void *) R,(void *) Elem);
     return NULL;
   }
   ruleElement* p = headRule(R);
