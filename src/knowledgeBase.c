@@ -20,24 +20,32 @@ KB* createEmptyKB()
 
 KB* addRule(KB* kb, Rule* R)
 {
-  KBElement* newel = (KBElement*)malloc(sizeof(KBElement));
-  newel->KBrule = R;
-  newel->next = NULL;
   if(kb == NULL || R == NULL)
     {
       fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",(void *) kb,(void *) R);
       return NULL;
     }
-  else
+  KBElement* newel = (KBElement*)malloc(sizeof(KBElement));
+  if(newel == NULL) 
     {
-      KBElement* pkb = *kb;
-      while(pkb->next != NULL)
-	      {
-	        pkb = pkb->next;
-      	}
-      pkb->next = newel;
+    fprintf(stderr , "Seems there's a memory error while allocation of KB in createEmptyKB");
+    return NULL;
     }
-  return kb;
+  newel->KBrule = R;
+  newel->next = NULL;  
+  KBElement* pkb = *kb; //pointer to read trough kb
+  if (*kb == NULL)
+    {
+    *kb = newel;
+  }else
+    {
+    while(pkb->next != NULL)
+      {
+        pkb = pkb->next;
+      }
+    pkb->next = newel;
+    }
+  return kb; 
 }
 
 Rule* headKB(KB* kb)

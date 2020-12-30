@@ -68,7 +68,7 @@ ruleElement* headRule(Rule* R)
 ruleElement* tailRule(Rule* R)
 {
   ruleElement* E;
-  if(isEmptyPre(R))
+  if(isEmpty(R))
     {
       fprintf(stderr,"Error Rule might be NULL in tailRule function");
       return NULL;
