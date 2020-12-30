@@ -37,17 +37,23 @@ FB* addFact(FB* fb,Proposition* P);
 /**
  * @param fb - pointer to a fact base
  * @param id - string which identify the fact you want to delete
- * @return a modified base of facts
+ * @return Return a modified base of facts
  * @brief Delete a fact from a fact base
  */
 FB* deleteFact(FB* fb, char * id);
 
 /**
  * @param fb - pointer to a fact base
- * @brief print the Id of all the Proposition that are true
+ * @brief print the Id of all the Proposition 
  */
 void printPtrue(FB* fb);
-
+/**
+ * @param kb - Pointer to a knowledge base
+ * @param fb - Pointer to a fact base
+ * @return Return all true propositions from given rules and facts
+ * @brief eNgInE
+ */
+FB* RuNEnGiNe(KB* kb, FB* fb);
 
 
 #endif
