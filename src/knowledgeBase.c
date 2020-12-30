@@ -1,3 +1,10 @@
+/**
+ * @file knowledgeBase.c
+ * @author Driss/SavageBlink
+ * @date 30 december 2020
+ * @brief Source file of uses and algorithms related to a knowledge base.
+ */
+
 #include "headers/knowledgeBase.h"
 
 KB* createEmptyKB()
@@ -23,7 +30,7 @@ KB* addRule(KB* kb, Rule* R)
     }
   else
     {
-      KBElement* pkb = kb;
+      KBElement* pkb = *kb;
       while(pkb->next != NULL)
 	{
 	  pkb = pkb->next;
@@ -34,5 +41,5 @@ KB* addRule(KB* kb, Rule* R)
 
 Rule* headKB(KB* kb)
 {
-  return kb->KBrule;
+  return (*kb)->KBrule;
 }

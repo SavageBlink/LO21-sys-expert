@@ -1,6 +1,11 @@
 #ifndef KNOWLEDGE_BASE
 #define KNOWLEDGE_BASE
 
+#include <stdlib.h>
+#include <stdio.h>
+#include "rules.h"
+
+
 /**
  *Define a Knowledge Base which is implemented as a symply linked-list of rules.
  */
