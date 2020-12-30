@@ -13,7 +13,7 @@
 typedef struct factElem{
   Proposition* value;
   struct factElem * next;
-}factElement
+}factElement;
 
 typedef factElement * FB;
 
@@ -26,8 +26,8 @@ typedef factElement * FB;
 FB* createEmptyFB();
 
 /**
- * @param fb-Pointer to a base of facts you want to modify
- * @param P-Pointer to a proposition you want to add 
+ * @param fb - Pointer to a base of facts you want to modify
+ * @param P - Pointer to a proposition you want to add 
  * @return Return a modified base of facts
  * @brief Add facts to a List of facts
  */
@@ -35,11 +35,19 @@ FB* createEmptyFB();
 FB* addFact(FB* fb,Proposition* P);
 
 /**
- * @param fb-pointer to a fact base
- * @param id-string which identify the fact you want to delete
- * @Return Return a modified base of facts
+ * @param fb - pointer to a fact base
+ * @param id - string which identify the fact you want to delete
+ * @return a modified base of facts
  * @brief Delete a fact from a fact base
  */
 FB* deleteFact(FB* fb, char * id);
+
+/**
+ * @param fb - pointer to a fact base
+ * @brief print the Id of all the Proposition that are true
+ */
+void printPtrue(FB* fb);
+
+
 
 #endif
