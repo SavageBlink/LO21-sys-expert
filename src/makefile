@@ -1,6 +1,6 @@
-OBJS	= main.o knowledgeBase.o rules.o
-SOURCE	= main.c knowledgeBase.c rules.c
-HEADER	= bool.h knowledgeBase.h rules.h
+OBJS	= main.o knowledgeBase.o rules.o engine.o
+SOURCE	= main.c knowledgeBase.c rules.c engine.c
+HEADER	= bool.h knowledgeBase.h rules.h engine.h
 OUT	= a.out
 CC	 = gcc
 FLAGS	 = -g -c -Wall -fpic -pedantic -Werror

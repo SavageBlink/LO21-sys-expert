@@ -22,8 +22,4 @@ void printPtrue(FB* fb){
 }
     
 
-    
 
-
-
-}

@@ -48,6 +48,4 @@ FB* deleteFact(FB* fb, char * id);
  */
 void printPtrue(FB* fb);
 
-
-
 #endif
