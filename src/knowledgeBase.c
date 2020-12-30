@@ -20,7 +20,7 @@ KB* createEmptyKB()
 
 KB* addRule(KB* kb, Rule* R)
 {
-  KBElement* newel;
+  KBElement* newel = (KBElement*)malloc(sizeof(KBElement));
   newel->KBrule = R;
   newel->next = NULL;
   if(kb == NULL || R == NULL)
@@ -37,6 +37,7 @@ KB* addRule(KB* kb, Rule* R)
 	}
       pkb->next = newel;
     }
+  return kb;
 }
 
 Rule* headKB(KB* kb)
