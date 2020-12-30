@@ -1,6 +1,6 @@
-OBJS	= rules.o
-SOURCE	= rules.c
-HEADER	= bools.h rules.h
+OBJS	= main.o knowledgeBase.o rules.o
+SOURCE	= main.c knowledgeBase.c rules.c
+HEADER	= bool.h knowledgeBase.h rules.h
 OUT	= a.out
 CC	 = gcc
 FLAGS	 = -g -c -Wall
@@ -9,10 +9,15 @@ LFLAGS	 =
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
+main.o: main.c
+	$(CC) $(FLAGS) main.c 
+
+knowledgeBase.o: knowledgeBase.c
+	$(CC) $(FLAGS) knowledgeBase.c 
+
 rules.o: rules.c
 	$(CC) $(FLAGS) rules.c 
 
 
 clean:
 	rm -f $(OBJS) $(OUT)
-

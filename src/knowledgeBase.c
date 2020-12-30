@@ -36,7 +36,7 @@ KB* addRule(KB* kb, Rule* R)
 	  pkb = pkb->next;
 	}
       pkb->next = newel;
-    }
+    }return kb;
 }
 
 Rule* headKB(KB* kb)

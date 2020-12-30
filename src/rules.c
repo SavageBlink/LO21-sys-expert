@@ -68,7 +68,7 @@ ruleElement* headRule(Rule* R)
 ruleElement* tailRule(Rule* R)
 {
   ruleElement* E;
-  if(isEmpty(R))
+  if(isEmptyPre(R))
     {
       return NULL;
     }
