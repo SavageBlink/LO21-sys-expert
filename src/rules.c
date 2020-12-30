@@ -70,6 +70,11 @@ ruleElement* tailRule(Rule* R)
   ruleElement* E;
   if(isEmptyPre(R))
     {
+      fprintf(stderr,"Error Rule might be NULL in tailRule function");
+      return NULL;
+    }
+  else if(isEmptyPre(R))
+    {
       return NULL;
     }
   else
