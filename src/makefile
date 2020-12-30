@@ -17,7 +17,8 @@ knowledgeBase.o: knowledgeBase.c
 
 rules.o: rules.c
 	$(CC) $(FLAGS) rules.c 
-
+engine.o: engine.c
+	$(CC) $(FLAGS) engine.c
 
 clean:
 	rm -f $(OBJS) $(OUT)
