@@ -38,26 +38,6 @@ Rule* createEmptyRule()
   return R;
 }
 
-KB* createEmptyKB()
-{
-  KB* kb = (KB*)malloc(sizeof(KB));
-  if (kb == NULL)
-    {
-      fprintf(stderr , "Seems there's a memory error while allocation of KB in createEmptyKB");
-      return NULL;
-    }
-  return kb;
-}
-
-KB* addRule(KB* kb, Rule* R)
-{
-  if(kb == NULL || R == NULL)
-    {
-      fprintf(stderr, "You have a NULL pointer in addRule function, (kb = %p, R = %p)",kb,R);
-      return NULL;
-    }
-}
-
 boolean isEmpty(Rule* R){
   if (R== NULL){
     return true;
