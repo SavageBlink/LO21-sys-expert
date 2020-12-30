@@ -2,7 +2,7 @@
  * @file rules.h
  * @author Guillaume/Hendercraft Driss/SavageBlink
  * @date 21 december 2020
- * @brief header file of rules and propositions ,it also initialize constructors, modifiers and observers algorithms of a rule.
+ * @brief header file of rules and propositions ,it also initialize constructors, modifiers and obser * vers algorithms of a rule.
  */
 
 #ifndef RULES
@@ -27,6 +27,7 @@ typedef struct ruleElem{
     Proposition* value;
     struct ruleElem * next;
 } ruleElement;
+
 
 typedef struct rule{
   ruleElement* head;
