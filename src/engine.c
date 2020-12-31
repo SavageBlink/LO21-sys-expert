@@ -85,7 +85,7 @@ boolean computeRule(Rule* R)
       return true;
     }
   ruleElement * pR = R->head;
-  while(pR->value->value != false || pR->next != NULL)
+  while(pR->value->value != false && pR->next != NULL)
     {
       pR = pR->next;
     }

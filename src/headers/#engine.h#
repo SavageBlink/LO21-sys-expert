@@ -1,4 +1,4 @@
-/**
+1/**
  * @file engine.h
  * @author Guillaume/Hendercraft Driss/SavageBlink
  * @date 30 december 2020
@@ -32,7 +32,7 @@ FB* createEmptyFB();
  * @brief Add facts to a List of facts
  */
 
-FB* addFact(FB* fb, Proposition* P);
+FB* addFact(FB* fb,Proposition* P);
 
 /**
  * @param fb - pointer to a fact base
@@ -49,11 +49,19 @@ FB* deleteFact(FB* fb, char * id);
 void printPtrue(FB* fb);
 
 /**
+ * @param R - Pointer to a rule
+ * @return Return a boolean 
+ * @brief Return a boolean which is the value of the conclusion of a rule
+ */
+boolean computeRule(Rule* R);
+
+
+/**
  * @param kb - Pointer to a knowledge base
  * @param fb - Pointer to a fact base
  * @return Return all true propositions from given rules and facts
- * @brief Use both rules and facts to deduce a list of facts.
+ * @brief eNgInE
  */
-FB* cran
+FB* RuNEnGiNe(KB* kb, FB* fb);
 
 #endif
