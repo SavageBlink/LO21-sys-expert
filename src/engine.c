@@ -107,25 +107,16 @@ FB* RuNEnGiNe(KB* kb, FB* fb)
     {
       modified = false;
       KBElement * pkb = *kb; /*Pointer on kb*/
-      if(pkb->next == NULL) /*Testing if kb has only one rule*/
-	{
-	  if(computeRule(pkb->KBrule) == true)
+      while(pkb != NULL) /*We go through all the knowledge base*/
 	    {
-	      pkb->KBrule->Conclusion->value = true;
-	      addFact(fb, pkb->KBrule->Conclusion);
+	      if(computeRule(pkb->KBrule) == true) 
+	      {
+	        pkb->KBrule->Conclusion->value = true;
+	        addFact(fb, pkb->KBrule->Conclusion);
+	       modified = true;
+	      }
+	    pkb = pkb->next;
 	    }
-	  return fb; /*return fb because there is only one rule*/
-	}
-      while(pkb->next != NULL) /*We go through all the knowledge base*/
-	{
-	  if(computeRule(pkb->KBrule) == true) 
-	    {
-	      pkb->KBrule->Conclusion->value = true;
-	      addFact(fb, pkb->KBrule->Conclusion);
-	      modified = true;
-	    }
-	  pkb = pkb->next;
-	}
     }while(modified == true); /*if fb has been modified we have to check again kb's rules*/
   return fb;
 }
