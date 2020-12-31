@@ -38,7 +38,7 @@ FB* addFact(FB* fb, Proposition* P)
   newel->value = P;
   if(pfb == NULL)
     {
-      pfb = newel;
+      *fb = newel;
       return fb;
     }
   while(pfb->next != NULL)
@@ -55,9 +55,9 @@ void printPtrue(FB* fb){
         return;
     }
     FB p = (*fb); //Creating a pointers to parse fb
-    while (p->next != NULL)
+    while (p != NULL)
     {
-     printf("The Prosition that are true are : \n ( %s",p->value->id);
+     printf("%s is true \n ",p->value->id);
      p = p->next;
     }
     return;

@@ -14,12 +14,12 @@ int main(){
 
     
     TesteuProposition->id = "Helo";
-    TesteuProposition->value = true;
+    TesteuProposition->value = false;
 
     proop->id = "test1";
     proop->value = true;
 
-    addFact(fb,TesteuProposition);
+    //addFact(fb,TesteuProposition);
     addFact(fb, proop);
 
     
@@ -30,10 +30,10 @@ int main(){
     TesteuConclu->value = false;
     addConclusion(TesteuRule,TesteuConclu);
     addPremisse(TesteuRule,TesteuProposition);
+    addPremisse(TesteuRule,proop);
     addRule(TesteuKB,TesteuRule);
-    printf("%s",(headKB(TesteuKB))->head->value->id);
 
     RuNEnGiNe(TesteuKB,fb);
-    
+    printPtrue(fb);
     return EXIT_SUCCESS;
 }
