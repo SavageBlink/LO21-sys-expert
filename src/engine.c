@@ -57,7 +57,7 @@ void printPtrue(FB* fb){
     FB p = (*fb); //Creating a pointers to parse fb
     while (p != NULL)
     {
-     printf("%s is true \n ",p->value->id);
+     printf("%s is true \n",p->value->id);
      p = p->next;
     }
     return;
