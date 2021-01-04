@@ -14,9 +14,12 @@ void printmenu(){
 	printf("2 - Create a new proposition\n");
 	printf("3 - Add a proposition to a rule's premisse\n");
 	printf("4 - Add a proposition to a rule's conclusion\n");
-	printf("5 - Make a proposition ture and add it to the FactBase\n");
+	printf("5 - Make a proposition true and add it to the FactBase\n");
 	printf("6 - Run the inference engine\n");
-	printf("7 - EXIT\n");
+	printf("7 - Print the existing proposition\n");
+	printf("8 - Print the Knowleage base\n");
+	printf("9 - Print the Fact Base\n");
+	printf("10 - EXIT\n");
 	printf("------------------------------------------- \n");
 	return;
 }
@@ -68,7 +71,7 @@ void printFactBase(FB* fb){
 	}
 	factElement * pfb = (*fb);
 	printf("------------------------------------------- \n");
-	printf("Propositions that ae acctually in the fact base are : \n (");
+	printf("Propositions that are acctually in the fact base are : \n (");
 	while (pfb != NULL){
 		printf("%s,",pfb->value->id);
 		pfb = pfb->next;
@@ -78,6 +81,23 @@ void printFactBase(FB* fb){
 	return;
 }
 
+
+void printPool(FB* fb){
+	if (fb == NULL){
+		fprintf(stderr,"The pointer given for printPool is NULL \n");
+		return;
+	}
+	factElement * pfb = (*fb);
+	printf("------------------------------------------- \n");
+	printf("Propositions that are created are are :\n (");
+	while (pfb != NULL){
+		printf("%s,",pfb->value->id);
+		pfb = pfb->next;
+	}
+	printf(")\n");
+	printf("------------------------------------------- \n");
+	return;
+}
 
 KB* UseraddRule(KB* kb,char* id){
 	if (kb == NULL || id == NULL){
@@ -179,7 +199,7 @@ Proposition* GetProposition(FB* fb,char* id){
 char* GetRuleIDInput(KB* kb){
 		char* Rname = (char*) malloc(sizeof(char)*255);
 	do{	
-		printf("Please enter the name of the new rule (must different from previous one and len< 15)\n");
+		printf("Please enter the rule (len< 15)\n");
 		scanf("%s",Rname);
 		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
 		return Rname;
@@ -189,7 +209,7 @@ char* GetRuleIDInput(KB* kb){
 char* GetRulePropositionId(){
 		char* Rname = (char*) malloc(sizeof(char)*255);
 	do{	
-		printf("Please enter the name of the new proposition (must different from previous one and len< 15)\n");
+		printf("Please enter the name of the Proposition (len< 15)\n");
 		scanf("%s",Rname);
 		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
 		return Rname;

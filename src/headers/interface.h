@@ -39,7 +39,12 @@ void printKnowledgeBase(KB* kb);
  * @brief Print all the proposition of a FactBase
  */
 void printFactBase(FB* fb);
-
+/**
+ * @param R - A pointer on the FB you wish to print
+ * @return NONE
+ * @brief Print all the proposition of a Pool of proposition
+ */
+void printPool(FB* fb);
 
 /**
  * @param id - The name of the rule, must be 15 char lor less
