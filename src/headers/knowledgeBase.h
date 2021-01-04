@@ -41,12 +41,6 @@ KB* addRule(KB* kb, Rule* R);
 Rule* headKB(KB* kb);
 
 
-/**
- * @param kb - A pointer on the kb you want to analyse
- * @param id - The name of the rule you're looking for
- * @brief Return a the rule with the same name as id, or NULL if the rule wasn't found
- * @return A pointer on the rule with name = id,
- */
-Rule* searchRule(KB* kb,char * id);
+
 
 #endif

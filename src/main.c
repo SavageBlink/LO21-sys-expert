@@ -9,15 +9,16 @@ int main(){
     KB* TesteuKB = createEmptyKB();
     FB* fb = createEmptyFB();
     
-    //FB* PropositionPool = createEmptyFB(); //This grand us an acces to all the propositio an user could want to add
+    FB* PropositionPool = createEmptyFB(); //This grand us an acces to all the propositio an user could want to add
 
     /**Genereating Rules**/
-    Rule* Rule1 = createEmptyRule();
+    //Rule* Rule1 = createEmptyRule();
     Rule* Rule2 = createEmptyRule();
     Rule* Rule3 = createEmptyRule();
 	
-	Rule1->name ="yes";
-	addRule(TesteuKB,Rule1);
+	//Rule1->name ="yes";
+	//addRule(TesteuKB,Rule1);
+	TesteuKB = UseraddRule(TesteuKB,"hellO");
     addRule(TesteuKB,Rule2);
     addRule(TesteuKB,Rule3);
     /**Generating props**/   
@@ -34,10 +35,13 @@ int main(){
     Proposition* C = createEmptyProposition();
     C->id = "C";
     C->value = false;
-
+	
+	/**
     Proposition* D = createEmptyProposition();
     D->id = "D";
     D->value = false;
+    **/
+    UseraddProposition(PropositionPool,"D");
     
     Proposition* F = createEmptyProposition();
     F->id = "F";
@@ -50,21 +54,21 @@ int main(){
 
 
     /**Attributing props to rules' premisse**/
-    addPremisse(Rule1,A);
-    addPremisse(Rule1,B);
+    addPremisse(GetRule(TesteuKB,"hellO"),A);
+    addPremisse(GetRule(TesteuKB,"hellO"),B);
 
     addPremisse(Rule2,C);
-    addPremisse(Rule2,D);
+    addPremisse(Rule2,GetProposition(PropositionPool,"D"));
 
     addPremisse(Rule3,B);
     addPremisse(Rule3,C);
 
     /**Attribuing conclusion to rules**/
-    addConclusion(Rule1,C);
+    addConclusion(GetRule(TesteuKB,"hellO"),C);
     
     addConclusion(Rule2,F);
 
-    addConclusion(Rule3,D);
+    addConclusion(Rule3,GetProposition(PropositionPool,"D"));
 
 
 
@@ -79,7 +83,7 @@ int main(){
     printFactBase(fb);
     //printPtrue(fb);
     
-    printRule(searchRule(TesteuKB,"yes"));
+    printRule(GetRule(TesteuKB,"hellO"));
     return EXIT_SUCCESS;
 }
  
