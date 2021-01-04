@@ -1,4 +1,4 @@
-#include "headers/engine.h"
+#include "headers/interface.h"
 
 
 
@@ -8,42 +8,78 @@ int main(){
     /**Genereating Kb and FB**/
     KB* TesteuKB = createEmptyKB();
     FB* fb = createEmptyFB();
+    
+    //FB* PropositionPool = createEmptyFB(); //This grand us an acces to all the propositio an user could want to add
 
     /**Genereating Rules**/
     Rule* Rule1 = createEmptyRule();
-
+    Rule* Rule2 = createEmptyRule();
+    Rule* Rule3 = createEmptyRule();
+	
+	Rule1->name ="yes";
+	addRule(TesteuKB,Rule1);
+    addRule(TesteuKB,Rule2);
+    addRule(TesteuKB,Rule3);
     /**Generating props**/   
     
 
-    Proposition* Prop1 = createEmptyProposition();
-    Prop1->id = "A";
-    Prop1->value = true;
+    Proposition* A = createEmptyProposition();
+    A->id = "A";
+    A->value = true;
 
-    Proposition* Prop2 = createEmptyProposition();
-    Prop2->id = "B";
-    Prop2->value = false;
+    Proposition* B = createEmptyProposition();
+    B->id = "B";
+    B->value = true;
 
-    Proposition* Conclu1 = createEmptyProposition();
-    Conclu1->id = "C";
-    Conclu1->value = false;
+    Proposition* C = createEmptyProposition();
+    C->id = "C";
+    C->value = false;
+
+    Proposition* D = createEmptyProposition();
+    D->id = "D";
+    D->value = false;
+    
+    Proposition* F = createEmptyProposition();
+    F->id = "F";
+    F->value = false;
+
 
     /**adding true prop to fb**/
-    addFact(fb,Prop1);
-    //addFact(fb,Prop2);
+    addFact(fb,A);
+    addFact(fb,B);
+
 
     /**Attributing props to rules' premisse**/
-    addPremisse(Rule1,Prop1);
-    addPremisse(Rule1,Prop2);
+    addPremisse(Rule1,A);
+    addPremisse(Rule1,B);
+
+    addPremisse(Rule2,C);
+    addPremisse(Rule2,D);
+
+    addPremisse(Rule3,B);
+    addPremisse(Rule3,C);
 
     /**Attribuing conclusion to rules**/
-    addConclusion(Rule1,Conclu1);
+    addConclusion(Rule1,C);
     
+    addConclusion(Rule2,F);
+
+    addConclusion(Rule3,D);
+
+
 
     /**Atrributing rules to kb**/
-    addRule(TesteuKB,Rule1);
-
-
+    
+	
+	
+	printKnowledgeBase(TesteuKB);
+	printFactBase(fb);
+	
     RuNEnGiNe(TesteuKB,fb);
-    printPtrue(fb);
+    printFactBase(fb);
+    //printPtrue(fb);
+    
+    printRule(searchRule(TesteuKB,"yes"));
     return EXIT_SUCCESS;
 }
+ 

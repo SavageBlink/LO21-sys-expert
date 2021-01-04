@@ -32,7 +32,7 @@ typedef struct ruleElem{
 typedef struct rule{
   ruleElement* head;
   Proposition* Conclusion;
-  
+  char * name;
 } Rule;
 
 

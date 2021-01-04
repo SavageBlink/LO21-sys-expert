@@ -10,6 +10,7 @@
 #define ENGINE
 #include "knowledgeBase.h"
 
+
 typedef struct factElem{
   Proposition* value;
   struct factElem * next;

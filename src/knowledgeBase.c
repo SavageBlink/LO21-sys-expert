@@ -7,6 +7,7 @@
 
 #include "headers/knowledgeBase.h"
 
+
 KB* createEmptyKB()
 {
   KB* kb = (KB*)malloc(sizeof(KB));
@@ -52,3 +53,25 @@ Rule* headKB(KB* kb)
 {
   return (*kb)->KBrule;
 }
+
+
+Rule* searchRule(KB* kb,char * id){
+	if(kb == NULL || id == NULL){
+		fprintf(stderr, "You have a NULL pointer in searchRule function, (kb = %p, R = %p)",(void *) kb,(void *) id);
+		return NULL;
+    }
+    KBElement * pkb = (*kb);
+    while (pkb != NULL){
+    	if (strcmp(id,pkb->KBrule->name) == 0){
+    		return pkb->KBrule;
+    	}else{
+    		pkb = pkb->next;
+    	}
+    }
+    fprintf(stderr, "The rule with %s id wasn't found in (kb = %p)",id,(void *) kb);
+    return NULL;
+   }
+    	
+    
+
+

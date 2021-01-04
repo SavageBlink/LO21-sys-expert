@@ -6,7 +6,7 @@
  */ 
 
 #include"headers/engine.h"
-
+#include "headers/interface.h"
 FB* createEmptyFB()
 {
   FB* fb = (FB*)malloc(sizeof(FB));
@@ -67,12 +67,13 @@ boolean computeRule(Rule* R)
 {
   if(isEmpty(R))
     {
-      fprintf(stderr,"Error while computing Rule (R : %p)",(void*) R);
+      fprintf(stderr,"Error while computing Rule (R : %p)\n",(void*) R);
       return false;
     }
   else if(R->Conclusion == NULL)
     {
-      fprintf(stderr, "Error while computing Rule (R->Conclusion : %p)",(void*) R->Conclusion);
+	  printRule(R);    
+      fprintf(stderr, "Error while computing Rule (R->Conclusion : %p)\n",(void*) R->Conclusion);
       return false;
     }
 

@@ -1,6 +1,6 @@
-OBJS	= main.o knowledgeBase.o rules.o engine.o
-SOURCE	= main.c knowledgeBase.c rules.c engine.c
-HEADER	= bool.h knowledgeBase.h rules.h engine.h
+OBJS	= main.o knowledgeBase.o rules.o engine.o interface.o
+SOURCE	= main.c knowledgeBase.c rules.c engine.c interface.c
+HEADER	= bool.h knowledgeBase.h rules.h engine.h interface.h
 OUT	= a.out
 CC	 = gcc
 FLAGS	 = -g -c -Wall -fpic -pedantic -Werror
@@ -19,6 +19,7 @@ rules.o: rules.c
 	$(CC) $(FLAGS) rules.c 
 engine.o: engine.c
 	$(CC) $(FLAGS) engine.c
-
+interface.o: interface.c
+	$(CC) $(FLAGS) interface.c
 clean:
 	rm -f $(OBJS) $(OUT)

@@ -35,6 +35,11 @@ Rule* createEmptyRule()
   }
   R->head = NULL;
   R->Conclusion =NULL;
+  R->name = (char*) malloc(15*sizeof(char));
+  if (R->name == NULL){
+    free(R);
+    fprintf(stderr,"Seems there's a an memorry error allocation in createEmptyRule for the R name allocation");
+  }
   return R;
 }
 

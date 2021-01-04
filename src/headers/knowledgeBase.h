@@ -1,8 +1,9 @@
-#ifndef KNOWLEDGE_BASE
-#define KNOWLEDGE_BASE
+#ifndef KNOWLEDGEBASE
+#define KNOWLEDGEBASE
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "rules.h"
 
 
@@ -23,15 +24,29 @@ typedef KBElement * KB;
 KB* createEmptyKB();
 
 /**
+ * @param kb - A pointer on the kb you want to add a rule
+ * @param R - A pointer on the rule you want to add
  * @brief Add a new rule at the end of a KB
+ * @return A pointer on the modified KB
  */
 
 KB* addRule(KB* kb, Rule* R);
 
 /**
+ * @param kb - A pointer on the kb you want to get the head from
  * @brief Return a pointer to the first rule of a KB
+ * @return The head of the kb
  */
 
 Rule* headKB(KB* kb);
+
+
+/**
+ * @param kb - A pointer on the kb you want to analyse
+ * @param id - The name of the rule you're looking for
+ * @brief Return a the rule with the same name as id, or NULL if the rule wasn't found
+ * @return A pointer on the rule with name = id,
+ */
+Rule* searchRule(KB* kb,char * id);
 
 #endif
