@@ -1,89 +1,64 @@
+
 #include "headers/interface.h"
-
-
-
 
 int main(){
 
-    /**Genereating Kb and FB**/
-    KB* TesteuKB = createEmptyKB();
+	/*Variable initialisation*/
+	KB* kb = createEmptyKB();
     FB* fb = createEmptyFB();
-    
-    FB* PropositionPool = createEmptyFB(); //This grand us an acces to all the propositio an user could want to add
+    FB* PPool = createEmptyFB(); 
+	int quit = 0;
+	char* tempPInput;
+	char* tempRInput;
 
-    /**Genereating Rules**/
-    //Rule* Rule1 = createEmptyRule();
-    Rule* Rule2 = createEmptyRule();
-    Rule* Rule3 = createEmptyRule();
 	
-	//Rule1->name ="yes";
-	//addRule(TesteuKB,Rule1);
-	TesteuKB = UseraddRule(TesteuKB,"hellO");
-    addRule(TesteuKB,Rule2);
-    addRule(TesteuKB,Rule3);
-    /**Generating props**/   
-    
-
-    Proposition* A = createEmptyProposition();
-    A->id = "A";
-    A->value = true;
-
-    Proposition* B = createEmptyProposition();
-    B->id = "B";
-    B->value = true;
-
-    Proposition* C = createEmptyProposition();
-    C->id = "C";
-    C->value = false;
-	
-	/**
-    Proposition* D = createEmptyProposition();
-    D->id = "D";
-    D->value = false;
-    **/
-    UseraddProposition(PropositionPool,"D");
-    
-    Proposition* F = createEmptyProposition();
-    F->id = "F";
-    F->value = false;
-
-
-    /**adding true prop to fb**/
-    addFact(fb,A);
-    addFact(fb,B);
-
-
-    /**Attributing props to rules' premisse**/
-    addPremisse(GetRule(TesteuKB,"hellO"),A);
-    addPremisse(GetRule(TesteuKB,"hellO"),B);
-
-    addPremisse(Rule2,C);
-    addPremisse(Rule2,GetProposition(PropositionPool,"D"));
-
-    addPremisse(Rule3,B);
-    addPremisse(Rule3,C);
-
-    /**Attribuing conclusion to rules**/
-    addConclusion(GetRule(TesteuKB,"hellO"),C);
-    
-    addConclusion(Rule2,F);
-
-    addConclusion(Rule3,GetProposition(PropositionPool,"D"));
-
-
-
-    /**Atrributing rules to kb**/
-    
-	
-	
-	printKnowledgeBase(TesteuKB);
-	printFactBase(fb);
-	
-    RuNEnGiNe(TesteuKB,fb);
+	/*Main menu*/
+	while (quit == 0){
+		printmenu();
+		int UserInput = 0;
+		scanf("%d",&UserInput);
+		switch(UserInput){
+			case 1 :
+				clrscr();
+				tempRInput = GetRuleIDInput(); //geting user input
+				while(GetRule(kb,tempRInput) != NULL){ //Checking if the rule already exist
+					printf("This rule allready exist please choose another name\n");
+					tempRInput = GetRuleIDInput();
+				}
+				UseraddRule(kb,tempRInput); // adding rule to the KB
+				printf("New rule created : %s \n",tempRInput);
+				printKnowledgeBase(kb);
+				break;
+			case 2 :
+				clrscr();
+				tempPInput = GetRulePropositionId();
+				while(GetProposition(PPool,tempPInput)){ //Checking if the proposition already exit
+					printf("This Proposition allready exist please choose another id\n");
+					tempPInput = GetRulePropositionId();
+				}
+				UseraddProposition(PPool,tempPInput); // adding the Proposition to the Pool
+				printf("New Proposition created  : %s \n",tempPInput);
+				//newprop
+				break;
+			case 3 :
+				clrscr();
+			 	//ruleprem
+			 	break;
+			case 4 :
+				//ruleconclu
+				break;
+			case 5 :
+				//make true
+				break;
+			case 6 :
+				quit = 1;
+				break;	
+			default:
+				printf("Please enter a number between 1 and 6\n");
+		}
+	}
     printFactBase(fb);
     //printPtrue(fb);
-    
-    printRule(GetRule(TesteuKB,"hellO"));
+
     return EXIT_SUCCESS;
 }
- 

@@ -11,7 +11,12 @@
 
 
 
+/**
 
+ * @return NONE
+ * @brief Print the main menu
+ */
+void printmenu();
 
 /**
  * @param R - A pointer on the Rule you wish to print
@@ -52,7 +57,7 @@ KB* UseraddRule(KB* kb,char* id);
  * @brief Look for a rule from a kb an a proposition from the pool, if there's a match add the proposition to the premisse of the rule
  * 
  */
-KB* UseraddPremisse(KB* kb,char* idR,char* idP,FB* pool);
+KB* UseraddPremisse(KB* kb,FB* pool,char* idR,char* idP);
 
 /**
  * @param kb - The KB you want to modify the rule from
@@ -63,7 +68,7 @@ KB* UseraddPremisse(KB* kb,char* idR,char* idP,FB* pool);
  * @brief Look for a rule from a kb an a proposition from the pool, if there's a match add the proposition to the premisse of the rule
  * 
  */
-KB* UseraddConclusion(KB* kb,char* idR,char* idP,FB* pool);
+KB* UseraddConclusion(KB* kb,FB* pool,char* idR,char* idP);
 
 /**
  * @param kb - A pointer on the kb you want to analyse
@@ -74,7 +79,7 @@ KB* UseraddConclusion(KB* kb,char* idR,char* idP,FB* pool);
 Rule* GetRule(KB* kb,char * id);
 
 /**
- * @param kb - The Fb you want to add the Proposition to, might be the FB of the system or a proposition POOL
+ * @param Fb - The Fb you want to add the Proposition to, might be the FB of the system or a proposition POOL
  * @return The FB with the proposition added
  * @brief Create and add a premisse with a given name to a list of proposition aka a FB
  */
@@ -82,13 +87,28 @@ FB* UseraddProposition(FB* fb,char* id);
 
 
 /**
- * @param kb - The Fb you want to get the proposition from, might be the FB of the system or a proposition POOL
+ * @param fb - The Fb you want to get the proposition from, might be the FB of the system or a proposition POOL
  * @return A pointer on the proposition withe the given id, else NULL
  * @brief Look for an return a proposiotn with a given id from a POOL
  */
 Proposition* GetProposition(FB* fb,char* id);
 
+/**
+ * @return A sanitized string from the user
+ * @brief ask the user fir a rule name
+ */
+char* GetRuleIDInput();
 
+/**
+ * @return A sanitized string from the user
+ * @brief ask the user fir a Proposition name
+ */
+char* GetRulePropositionId();
+
+/**
+ *	@brief Clear the screen
+ */
+void clrscr();
 
 
 #endif

@@ -7,6 +7,19 @@
 
 #include "headers/interface.h"
 
+void printmenu(){
+	printf("------------------------------------------- \n");
+	printf("Main menu :\n");
+	printf("1 - Create a new rule\n");
+	printf("2 - Create a new proposition\n");
+	printf("3 - Add a proposition to a rule's premisse\n");
+	printf("4 - Add a proposition to a rule's conclusion\n");
+	printf("5 - Make a proposition ture and add it to the FactBase\n");
+	printf("6 - Run the inference engine\n");
+	printf("7 - EXIT\n");
+	printf("------------------------------------------- \n");
+	return;
+}
 
 void printRule(Rule * R){
 	if (R == NULL){
@@ -84,11 +97,12 @@ FB* UseraddProposition(FB* fb,char* id){
     }
     Proposition * P = createEmptyProposition();
     P->id = id;
+    P->value = false;
     fb = addFact(fb,P);
     return fb;
 }
 
-KB* UseraddPremisse(KB* kb,char* idR,char* idP,FB* pool){
+KB* UseraddPremisse(KB* kb,FB* pool,char* idR,char* idP){
 	if (pool == NULL || idR == NULL || idP  == NULL || kb == NULL){
 		fprintf(stderr,"One of the the pointers in UseraddPremisse is NULL (pool = %p, kb = %p, idR = %s, idp = %s )\n",(void *) pool,(void *) kb,idR,idP);
     }else{
@@ -108,7 +122,7 @@ KB* UseraddPremisse(KB* kb,char* idR,char* idP,FB* pool){
 }
 
 
-KB* UseraddConclusion(KB* kb,char* idR,char* idP,FB* pool){
+KB* UseraddConclusion(KB* kb,FB* pool,char* idR,char* idP){
 	if (pool == NULL || idR == NULL || idP  == NULL || kb == NULL){
 		fprintf(stderr,"One of the the pointers in UseraddConclusion is NULL (pool = %p, kb = %p, idR = %s, idp = %s )\n",(void *) pool,(void *) kb,idR,idP);
     }else{
@@ -131,7 +145,7 @@ KB* UseraddConclusion(KB* kb,char* idR,char* idP,FB* pool){
     
 Rule* GetRule(KB* kb,char * id){
 	if(kb == NULL || id == NULL){
-		fprintf(stderr, "You have a NULL pointer in GetRule function, (kb = %p, R = %p)",(void *) kb,(void *) id);
+		fprintf(stderr, "You have a NULL pointer in GetRule function, (kb = %p, id = %p)",(void *) kb,(void *) id);
 		return NULL;
     }
     KBElement * pkb = (*kb);
@@ -142,7 +156,6 @@ Rule* GetRule(KB* kb,char * id){
     		pkb = pkb->next;
     	}
     }
-    fprintf(stderr, "The rule with %s id wasn't found in (kb = %p)",id,(void *) kb);
     return NULL;
    }
 
@@ -159,9 +172,39 @@ Proposition* GetProposition(FB* fb,char* id){
     	}else{
     		pfb = pfb->next;
     	}
-    }printf ("The prposition %s wasn't on the fb %p\n",id,(void *) fb);
+    }
     return NULL;
 }
     
-	
-	
+char* GetRuleIDInput(KB* kb){
+		char* Rname = (char*) malloc(sizeof(char)*255);
+	do{	
+		printf("Please enter the name of the new rule (must different from previous one and len< 15)\n");
+		scanf("%s",Rname);
+		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
+		return Rname;
+}
+
+
+char* GetRulePropositionId(){
+		char* Rname = (char*) malloc(sizeof(char)*255);
+	do{	
+		printf("Please enter the name of the new proposition (must different from previous one and len< 15)\n");
+		scanf("%s",Rname);
+		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
+		return Rname;
+}	
+
+
+
+
+void clrscr()
+{
+	#if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+       system("clear");
+   #endif
+
+   #if defined(_WIN32) || defined(_WIN64)
+       system("cls");
+   #endif
+}
