@@ -58,10 +58,10 @@ C'est un outil capable de reproduire les mécanismes cognitifs d'un expert, dans
 \section{Definition des composants du système expert}
 Nous allons définir les composants d'un système expert dans les prochaines sections.
 \subsection{Proposition}
-Une proposition est composée de son identifiant et de sa valeur, son identifiant l'identifie parmis d'autres propositions sa valeur est soit vraie soit fausse mais ne peut pas être les deux à la fois. \\
-Son identifiant peut-être une chaînes de caractères ou autre en tout cas , il est unique.
+Une proposition est composée de son identifiant et de sa valeur, son identifiant l'identifie parmi d'autres propositions sa valeur est soit vraie soit fausse mais ne peut pas être les deux à la fois. \\
+Son identifiant peut-être une chaîne de caractères ou autre, il doit lui être unique.
 \subsection{Règle}
-On défini une règle comme une liste de propositions divisées en 2 parties la prémisse et la conclusion qui est toujours le dernier élément de cette liste. 
+On définit une règle comme une liste de propositions divisées en 2 parties : la prémisse qui est la première partie de cette liste de proposition amputée de la conclusion. Conclusion qui est toujours le dernier élément de la Règle. 
 \\Soit E l'ensemble des propositions de l'univers.\\
 
 On peut aussi définir une règle $\Gamma$ comme ceci : 
@@ -78,13 +78,14 @@ Soit n $\in$ N. On définit l'application $\Gamma$ par
 Avec $T$ la conclusion de la règle et $(P_1,P_2,...,P_n)$ les propositions de sa prémisse.\\
 
 
-Cette définition certes rasoir permet une meilleur vue de ce que peut-être une règle cependant elle n'est pas adaptée à l'algorihtmique et ses implémentations.\\\clearpage
+Cette définition certes abstraite permet une meilleure vue de ce que peut-être une règle cependant elle n'est pas adaptée à l'algorithmique et ses implémentations.\\\clearpage
 Nous utiliserons alors la définition suivante se rapprochant de celle du cours : \\
 
 \underline{Constructeurs} : 
 
 \begin{itemize}
-    \item créerRègleVide (Chaîne de caractères) $\longrightarrow$ (Règle)\\
+    \item créerRègleVide () $\longrightarrow$ (Règle)
+    \item créerProposition (chaîne de caractères X booléen) $\longrightarrow$ (Proposition)
 \end{itemize}
 
 \underline{Modificateurs\\} : 
@@ -98,71 +99,139 @@ Nous utiliserons alors la définition suivante se rapprochant de celle du cours 
 \begin{itemize}
     \item estVideRègle (Règle) $\longrightarrow$ (Booléen), vérifie si la règle est vide
     \item estVidePrémisse (Règle) $\longrightarrow$ (Booléen), vérifie si la prémisse d'une règle est vide
-    \item têteRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la tête de la règle
-    \item queueRègle (Règle) $\longrightarrow$ (Proposition) , renvoi la queue de la règle
-    \item succ (Proposition) $\longrightarrow$ (Proposition) , renvoi l'élément suivant de l'élément courant
-    \item TestPremisseR (Règle X Proposition)$\longrightarrow$ (Booléen), vérifie si propostion donnée en argument est contenu dans la premisse de la règle 
+    \item têteRègle (Règle) $\longrightarrow$ (Proposition) , renvoie la tête de la règle
+    \item queueRègle (Règle) $\longrightarrow$ (Proposition) , renvoie la queue de la règle
+    \item id(Proposition) $\longrightarrow$ (Chaîne de caractère), renvoie l'identifiant d'une proposition
+    \item succ (Proposition) $\longrightarrow$ (Proposition) , renvoie l'élément suivant de l'élément courant
+    \item TestPremisseR (Règle X Chaîne de caractère)$\longrightarrow$ (Booléen), vérifie si propostion dont l'id donnée en argument est contenu dans la premisse de la règle 
 \end{itemize}
 
 \subsection{Definition de la base de connaissances}
-Une base connaissances est une liste de règles on ne fait aucune supposition sur la véracité des propositions qui les composent en dehors du moteur d'inférence et de la base de faits.
+Une base de connaissances est une liste de règles. On ne fait aucune supposition sur la véracité des propositions qui  composent les règles en dehors du moteur d'inférence et de la base de faits.
 Elle contient l'ensemble des règles du problème.
-\\Voici la définition du type abstrait "Liste de règles" : \\
+\\Voici la définition du type abstrait "BC" : \\
 Une liste de règles est une suite de règles chacune ayant un successeur et un prédecesseur sauf respectivement pour la tête (la première règle) et la queue (la dernière règle).\\
+\underline{Constructeurs} : 
+
+\begin{itemize}
+    \item créerBCVide () $\longrightarrow$ (BC)\\
+\end{itemize}
+
+\underline{Modificateurs} :
+\begin{itemize}
+    \item ajoutRègle (BC X Règle) $\longrightarrow$ (BC)\\
+\end{itemize}
+\underline{Observateurs} : 
+\begin{itemize}
+    \item têteBC (BC) $\longrightarrow$ (Règle)\\
+\end{itemize}
 
 \subsection{Definition de la base de faits}
-Une base de faits est une liste de propositions logiques, elle reprend la même définition qu'une liste de règles à la seul différence que tout les élements de cette liste sont des propositions.
+Une base de faits est une liste de propositions logiques, elle reprend la même définition qu'une liste de règles à la seule différence qu'il n'y a pas de notions de prémisse ou conclusion .
 
 \subsection{Definition d'un moteur d'inférence}
 Un moteur d'inférence a pour objectif de déduire de la base de connaissances et de la base de faits, des faits certains.
-C'est donc une fonction prenant en entrée une liste de règles et une liste de propositions vraie et sortant une liste de faits certains.
-\clearpage
+On peut alors l'imaginer comme une fonction ayant comme paramètre une liste de règle c'est-à-dire une base de connaissances et une liste de proposition vraies, la base de faits.
+Cette dernière renvoie  une nouvelle base de faits, résultat du parcourt des règles.
+
 % Algorithm Implementation and Development
 \section{Algorithmes et raisonnements}
-Dans cette sections nous écrirons les algorithmes utiles au fonctionnement du système expert. Ils auront cette structure générique : 
+Dans cette sections nous écrirons les algorithmes utiles au fonctionnement du système expert.
 
 \subsection{Algorithmes et Règles}
-Ici sont écrits tout les algorithmes régissants les règles du système expert (voir section 2.2).
+Ici sont écrits tous les algorithmes régissants les règles du système expert (voir section 2.2).
 \subsubsection{\underline{Constructeurs}}
 \begin{algorithm}
     \SetAlgoLined
     \KwResult{R : [Règle]}
-    R $\longleftarrow$ RègleVide\\
-    créerRègleVide $\longleftarrow$ R 
-    \caption{créerRègleVide}
+    \begin{algorithmic}
+        \STATE $R \gets [R\grave{e}gle]$
+        \STATE $cr\acute{e}erR\grave{e}gleVide \gets R$ 
+        \caption{créerRègleVide}
+    \end{algorithmic}
+
 \end{algorithm}
 
+\underline{Lexique} :
+\begin{itemize}
+    \item R : Un règle vide qui sera renvoyée\\
+\end{itemize}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \KwResult{R : [Règle]}
+    \KwData{id : [Chaine de caractère]}
+    \begin{algorithmic}
+        \STATE $P \gets [Proposition]$
+        \STATE $id(P) \gets id $
+        \STATE $cr\acute{e}erProposition \gets P$ 
+        \caption{créerProposition}
+    \end{algorithmic}
+
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item P : Une nouvelle proposition qui sera renvoyée
+    \item id : id de la proposition
+\end{itemize}
+\clearpage
 
 \subsubsection{\underline{Modificateurs}}
 \begin{algorithm}
     \SetAlgoLined 
     \KwData{R : [Règle], P : [Proposition]}
     \KwResult{R : Règle}
-    
     \begin{algorithmic}
-    
          \IF{non(estVide(R))} 
-            \IF{estVide(Premisse(R))} 
-                \STATE $Premisse(R) \gets P$ 
-            \ELSE 
-                \IF{estVide(succ(Premisse(R)))} 
-                    \STATE $succ(Premisse(R)) \gets P$
-                \ELSE
-                    \STATE $p \gets PropositionVide$
-                    \STATE $p \gets Premisse(R)$ 
-                    \WHILE{succ(succ(p)) != INDEFINI}
-                        \STATE $p \gets succ(p)$
-                    \ENDWHILE
-                    \STATE $succ(succ(p)) \gets succ(p)$ 
-                    \STATE $succ(p) \gets P$
-                \ENDIF
-            \ENDIF
+            \STATE $p \gets [Proposition] : t\hat{e}teR\grave{e}gle(R)$
+            \WHILE{succ(p) != INDEFINI}
+                \STATE $p \gets succ(p)$
+            \ENDWHILE
+            \STATE $succ(p) \gets p$ 
+            \STATE $p \gets P$
          \ENDIF
          \STATE $ajoutPremisse \gets R$
     \end{algorithmic}
     \caption{ajoutPremisse}
 \end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle où l'on souhaite ajouter une proposition
+    \item P : Proposition que l'on souhaite ajouter
+    \item p : Proposition qui prendra succesivement la valeur des propositions de la prémisse de R
+\end{itemize}
+
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{R : [Règle], P : [Proposition]}
+    \KwResult{R : Règle}
+    \begin{algorithmic}
+         \IF{(estVide(R))} 
+            \STATE $R \gets P$
+        \ELSE
+            \STATE $p \gets t\hat{e}teR\grave{e}gle(R)$
+            \WHILE{succ(p) != INDEFINI}
+                \STATE $p \gets succ(p)$
+            \ENDWHILE
+            \STATE $succ(p) \gets P$ 
+         \ENDIF
+         \STATE $cr\acute{e}Conclusion \gets R$
+    \end{algorithmic}
+    \caption{créeConclusion}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle où l'on souhaite ajouter une conclusion
+    \item P : Proposition que l'on souhaite ajouter en temps que conclusion
+    \item p : Proposition qui prendra succesivement la valeur des propositions de la prémisse de R
+\end{itemize}
+
+
 \clearpage
+
 \begin{algorithm}
     \SetAlgoLined
     \KwData{R : [Règle], id : [Chaîne de caractères]}
@@ -170,12 +239,12 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     
     \begin{algorithmic}
     
-        \STATE $p \gets [R\grave{e}gle] : R$
+        \STATE $p \gets [Proposition] : t\hat{e}teR\grave{e}gle(R)$
         
         \IF{estVideRègle(R)}
             \STATE $suppProposition \gets R$
         \ELSE
-            \IF{preVide(R)} 
+            \IF{estVidePrémisse(R)} 
                 \STATE $suppProposition \gets R$
             \ELSE
                 \WHILE{id(succ(e)) $\ne$ id}
@@ -191,6 +260,13 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     \caption{suppProposition} 
 \end{algorithm}
 
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle où l'on souhaite supprimer une proposition
+    \item id : Nom de la proposition que l'on souhaite surpprimer
+    \item e : Proposition qui prendra succesivement la valeur des propositions de la prémisse de R
+\end{itemize}
+
 \subsubsection{\underline{Observateurs}}
 \begin{algorithm}
     \SetAlgoLined
@@ -199,19 +275,22 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     
     \begin{algorithmic}
     
-        \STATE $p \gets [R\grave{e}gle] : R$
-        \STATE $b : \gets [Bool\acute{e}en] : Vrai$
-        \WHILE{succ(p) $\ne$ INDEFINI}
-            \IF{p $\ne$ INDEFINI} 
-                \STATE $b \gets Faux$
-            \ENDIF
-            \STATE $p \gets succ(p)$
-        \ENDWHILE
-        \STATE $estVideR\grave{e}gle \gets b$
+        \IF{R $\ne$ INDEFINI}
+            \STATE $estVideR\grave{e}gle \gets Faux$
+        \ELSE
+            \STATE $estVideR\grave{e}gle \gets Vrai$
+        \ENDIF
+
     
     \end{algorithmic}
     \caption{estVideRègle} 
 \end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle que l'on souhaite tester
+\end{itemize}
+
 \clearpage
 \begin{algorithm}
     \SetAlgoLined
@@ -219,7 +298,7 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     \KwResult{[booléen]}
     
     \begin{algorithmic}
-        \STATE $p \gets [R\grave{e}gle] : R$
+        \STATE $p \gets [Proposition] : t\hat{e}teR\grave{e}gle(R)$
         \IF{estVideRègle(R)}
             \STATE $estVidePr\acute{e}misse \gets Vrai$
         \ELSE
@@ -234,13 +313,19 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     \caption{estVidePrémisse} 
 \end{algorithm}
 
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle que l'on souhaite tester
+    \item p : Proposition qui prend la valeur de la tête de la premisse de R
+\end{itemize}
+
 \begin{algorithm}
     \SetAlgoLined
     \KwData{R : [Règle]}
     \KwResult{[Proposition]}
     
     \begin{algorithmic}
-        \IF{non(estVidePrémisse(R)}
+        \IF{non(estVideRègle(R))}
             \STATE $t\hat{e}teR\grave{e}gle \gets R$
         \ELSE
             \STATE $t\hat{e}teR\grave{e}gle \gets INDEFINI$
@@ -250,43 +335,54 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     \caption{têteRègle} 
 \end{algorithm}
 
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle dont on souhaite obtenir la tête de la premisse
+\end{itemize}
+
 \begin{algorithm}
     \SetAlgoLined
     \KwData{R : [Règle]}
     \KwResult{[Proposition]}
     
     \begin{algorithmic}
-        \STATE $p \gets [R\grave{e}gle] : R$
-        \IF{non(estVidePrémisse(R)}
+        \STATE $p \gets [Proposition] : t\hat{e}teR\grave{e}gle(R)$
+        \IF{non(estVidePrémisse(R))}
             \WHILE{succ(p) $\ne$ INDEFINI}
                 \STATE $p \gets succ(p)$
             \ENDWHILE
             \STATE $queueR\grave{e}gle \gets p$
         \ELSE
-            \STATE $queueR\grave{e}gle \gets R$
+            \STATE $queueR\grave{e}gle \gets t\hat(e)teR\grave{e}egle(R)$
         \ENDIF
       
     \end{algorithmic}
     \caption{queueRègle} 
 \end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle dont on souhaite obtenir la queue de la premisse 
+\end{itemize}
+
 \clearpage
 \begin{algorithm}
     \SetAlgoLined 
-    \KwData{R : [Règle], P : [Proposition]}
+    \KwData{R : [Règle], id : [chaine de caractère]}
     \KwResult{B : Booléen}
     
     \begin{algorithmic}
     
-        \IF{estVideRègle(R) OU estVide(P)} 
-            \STATE $TestPremisseR \gets VRAI$
+        \IF{estVideRègle(R) OU id = INDEFINIT} 
+            \STATE $TestPremisseR \gets FAUX$
         \ENDIF
-        \IF{estVidePrémisse(Premisse(R))} 
+        \IF{estVidePrémisse(R)} 
             \STATE $TestPremisseR \gets FAUX$
         \ELSE
-            \IF{Premisse(P)=P}
+            \IF{ID(têteRègle(R))=ID}
                 \STATE $TestPremisseR \gets VRAI$
             \ELSE
-                \STATE $TestPremisseR \gets TestPremisseR(Reste(R),P)$
+                \STATE $TestPremisseR \gets TestPremisseR(Reste(R),id)$
             \ENDIF
         \ENDIF
 
@@ -294,4 +390,282 @@ Ici sont écrits tout les algorithmes régissants les règles du système expert
     \end{algorithmic}
     \caption{TestPremisseR}
 \end{algorithm}
-\clearpage\end{document}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item R : La règle où l'on souhaite chercher la proposition
+    \item id : id de la proposition recherchée
+    \item B : Un Booleen, Vrai si on a trouvé la premisse, faux sinon
+\end{itemize}
+
+\clearpage
+\subsection{Algorithmes et Bases de connaissances}
+Ici sont écrits les algorithmes en lien avec la base de connaissances du programme.
+\subsubsection{\underline{Constructeur}}
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{}
+    \KwResult{BC}
+    
+    \begin{algorithmic}
+        \STATE $bc \gets BCVide$
+        \STATE $cr\acute{e}erBCVide \gets bc$
+    \end{algorithmic}
+    \caption{créerBCVide}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item bc : Une base de connaissances vide
+\end{itemize}
+
+\subsubsection{\underline{Modificateur}}
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{bc : [BC], R : [Règle]}
+    \KwResult{[BC]}
+
+    \begin{algorithmic}
+        \STATE $pbc \gets [R\grave{e}gle] : R\grave{e}gleVide$
+        \IF{bc = INDEFINI \AND R $\ne$ INDEFINI}
+            \STATE $bc \gets R$
+            \STATE $ajoutR\grave{e}gle \gets bc$
+        \ELSE
+            \IF{bc $\ne$ INDEFINI \AND R $\ne$ INDEFINI}
+                \STATE $pbc \gets bc$
+                \WHILE{succ(pbc) $\ne$ INDEFINI}
+                    \STATE $pbc \gets succ(pbc)$
+                \ENDWHILE
+                 \STATE $succ(pbc) \gets R$
+                \STATE $succ(succ(pbc)) \gets INDEFINI$
+            \ENDIF
+        \ENDIF
+        \STATE $ajoutR\grave{e}gle \gets bc$
+    \end{algorithmic}
+    \caption{ajoutRègle}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item bc : La base de connaissances où l'on souhaite ajouter une règle
+    \item R : La règle que l'on souhaite ajouter
+    \item pbc : Règle vide qui prendra succesivement la valeur des élements de bc pour la parcourir
+    \
+\end{itemize}
+\clearpage
+\subsubsection{\underline{Observateur}}
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{bc : [BC]}
+    \KwResult{R : [Règle]}
+    
+    \begin{algorithmic}
+        \IF{bc $\ne$ INDEFINI}
+           \STATE $t\hat{e}teBC \gets bc$
+        \ELSE
+            \STATE $t\hat{e}teBC \gets INDEFINI$
+        \ENDIF
+    \end{algorithmic}
+    \caption{têteBC}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item bc : La base de connaissances dont on souhaite obtenir la tête
+    \item têteBC : La tête de BC
+\end{itemize}
+
+
+\subsection{Algorithmes et Bases de faits}
+\subsubsection{\underline{Constructeur}}
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{}
+    \KwResult{BF}
+    
+    \begin{algorithmic}
+        \STATE $bf \gets BFVide$
+        \STATE $cr\acute{e}erBFVide \gets bf$
+    \end{algorithmic}
+    \caption{créerBFVide}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item bf : Une base de connaissance vide
+\end{itemize}
+
+\subsubsection{\underline{Modificateur}}
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{bf : [BF], P : [Proposition]}
+    \KwResult{BF}
+    
+    \begin{algorithmic}
+        \IF{bf = INDEFINI} 
+            \STATE $bf \gets P$
+        \ELSE
+            \STATE $pbf \gets [Proposition] : bf$
+            \WHILE{succ(pbf) $\ne$ INDEFINI}
+                \STATE $pbf \gets succ(pbf)$
+            \ENDWHILE
+            \STATE $succ(pbf) \gets P$
+            \STATE $succ(succ(pbf)) \gets INDEFINI$
+        \ENDIF
+        \STATE $ajouterFait \gets bf$
+    \end{algorithmic}
+    \caption{ajouterFait}
+\end{algorithm}
+\clearpage
+\underline{Lexique} :
+\begin{itemize}
+    \item bf : La base de connaissances où l'on souhaite ajouter une proposition
+    \item P : La proposition que l'on souhaite ajouter
+\end{itemize}
+\subsection{Algorithmes et Moteur d'inférence}
+Voici les algoritmes nécessaires au fonctionnement du moteur d'inférence.
+\begin{algorithm}
+    \SetAlgoLined 
+    \KwData{bf : [BF], bc : [BC]}
+    \KwResult{BF}
+    \begin{algorithmic}
+       
+       
+       \IF{bf $\ne$ INDEFINI \AND bc $\ne$ INDEFINI}
+            \STATE $pbf \gets [Proposition] : bf$
+            \WHILE{pbf $\ne$ INDEFINI}
+                \STATE $pbc \gets [R\acute{e}gle] : bc$
+                \WHILE{pbc $\ne$ INDEFINI}
+                    \IF{id(pbf) $\ne$ id(queueRègle(pbc))}
+                        \IF{TestPremisseR(pbc,id(pbf)) = Vrai}
+                            \STATE suppProposition(pbc,ID(PBF))
+                            \IF{estVidePremisse(pbc)}
+                                \STATE ajoutFait(bf,queueRègle(pbc))
+                            \ENDIF
+                        \ENDIF
+                    \ENDIF
+                    \STATE $pbc \gets succ(pbc)$
+                \ENDWHILE
+                
+                \STATE $pbf \gets succ(pbf)$
+            \ENDWHILE
+             
+       \ENDIF
+       \STATE  $calculMoteur \gets bf$
+    \end{algorithmic}
+    \caption{calculMoteur}
+\end{algorithm}
+
+\underline{Lexique} :
+\begin{itemize}
+    \item bf : La base de faits rentrée par l'utilisateur
+    \item bc : La base de connaissances réunissant l'ensemble des règles du système
+    \item pbf : Proposition, permettant le parcours de la base de faits
+    \item pbc : Règle, permettant le parcours de la base de connaissances
+\end{itemize}
+
+\subsection{Choix d'implémentation en langage C}
+Dans cette partie nous allons présenter et expliquer nos choix d'implémentations de nos algorithmes et de nos notions pour le langage C.\\
+
+\subsubsection{Propositions et Règles}
+Nous avons définit une proposition comme une structure de données composée de deux élements :\\ Une chaîne de caractères qui sera son identifiant et un booléen qui sera sa valeur (Vrai ou Faux).\\
+On définit alors une liste de propositions comme une liste simplement chaînée, on appellera elementRègle un de ces élements. Ce dernier est composé d'un pointeur sur une Proposition et un pointeur sur l'élement suivant.\\
+Une Règle est définie comme une structure de deux élement : un pointeur sur un élementRègle "tête" et un pointeur sur Proposition appelée "Conclusion".\\
+Grâce à cette implémentation , nous avons un accès rapide à la conclusion tout en simplifiant \\le type règle : La conclusion n'est plus en fin de prémisse, cela simplifie donc la manipulation et la conception de la prémisse.
+
+\subsubsection{Base de connaissances}
+On défini une base de connaissances comme une liste chaînée d'élements appelée elementBC, un elementBC est une structure composée d'un pointeur sur une règle et d'un pointeur sur un autre elementBC : le suivant.
+
+\subsubsection{Base de faits}
+On défini une base de faits comme une liste chaînée d'élements appelée elementBF, un elementBF est une structure composée d'un pointeur sur une proposition toujours vraie et d'un pointeur sur un autre elementBF : le suivant.
+
+\subsubsection{Moteur d'inférence}
+Le moteur d'inférence est implémenté en temps que fonction à deux paramètres : bc, un pointeur sur une structure BC(base de connaissances) ; bf, un pointeur sur une structure BF(base de faits).
+Cette fonction renvoie un pointeur sur la nouvelle base faits.\\
+En vue  de l'implémentation des propositions, le moteur d'inférence n'a pas besoin de parcourir la base de fait ou de supprimer des eléments de la prémisse d'une règle pour fonctioner, il se contente simplement de lire la valeur de la proposition afin de determiner si elle est vraie ou fausse.\\
+On peut donc  lancer le moteur d'inférence plusieurs fois,  en rajoutant ou modifiant des règles dans la base de connaissances entre chaque essai sans problème.
+
+\clearpage
+
+\section{Jeux d'essais}
+Dance cette partie nous allons voir le comportement de notre implémentation d'un systeme expert en C. Nous allons voir comment l'implémentation réagit à différentes règles, prémisses et bases de faits.
+
+\subsection{Essai n°1 : 1 règle}
+Pour cet essai la base de connaissances ne contient qu'une seule règle R.
+
+\begin{align*}
+    R : &(E)^2 \longrightarrow E\\ 
+    &(A,B) \longmapsto C
+\end{align*}
+(Voir fichier src/Jeux d'essai/test1.c)\\
+Observons le résultat du moteur d'inférence pour différentes bases de faits :
+
+
+\begin{figure}[h]
+\centerline{\includegraphics{test1.png}}
+\caption{Ici, en entrée seulement A et B sont vraies.}
+\label{Test1}
+\end{figure}
+
+\begin{figure}[h]
+\centerline{\includegraphics{test2.png}}
+\caption{Ici, en entrée seulement A est vrai.}
+\label{Test2}
+\end{figure}
+
+On peut voir que le moteur d'inférence a le comportement attendu avec une règle :\\ Si tous les élements de la premisse sont dans la base de faits, alors la conclusion est vraie et rentre donc à son tour dans la base de faits, si ce n'est pas le cas, alors rien ne se passe.
+
+\subsection{Essai n°2 : 3 règles}
+Pour cette essai la base de connaissances contient trois règles : R1, R2 et R3.
+
+\begin{align*}
+    R1 : &(E)^2 \longrightarrow E\\ 
+    &(A,B) \longmapsto C
+\end{align*}
+
+\begin{align*}
+    R2 : &(E)^2 \longrightarrow E\\ 
+    &(C,D) \longmapsto F
+\end{align*}
+
+\begin{align*}
+    R1 : &(E)^2 \longrightarrow E\\ 
+    &(B,C) \longmapsto D
+\end{align*}
+(Voir fichier src/Jeux d'essai/test2.c)\\
+\clearpage
+
+
+Observons le résultat du moteur d'inférence pour différentes bases de faits :
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.6]{J2Test1.png}}
+\caption{Ici, en entrée seulement A et B sont vraies.}
+\label{Test3}
+\end{figure}
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.6]{J2Test2.png}}
+\caption{Ici, en entrée seulement B et C sont vraies.}
+\label{Test4}
+\end{figure}
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.6]{J3Test3.png}}
+\caption{Ici, en entrée seulement A, C et D sont vraies.}
+\label{Test5}
+\end{figure}
+On  observe que le moteur d'inférence fonctionne aussi avec plusieurs règles, quelque soit la base de faits, la réponse du moteur d'inférence est toujours celle attendu. 
+\clearpage
+\section{Conclusion}
+Nous avons atteints l'objectif qui nous étais fixés : L'implémentation de notre système expert fonctionne en C sans soucis apparents. Toutefois, l'linterface pourrait être grandement améliorée : En effet, il n'y a pas moyen de revnir en arrière dans le menu, on peut donc se retrouver bloquer dans certains menu et contrains à relancer le programme.
+De plus, il est fort probable que l'interface aurait pu être simplifiée, de manière à réduire le code dans le main.\\
+Même si nous n'avons pas découvert de nouveaux aspects du langage C avec ce projet, ce dernier à permis de renforcer nos bases et d'utiliser les compétences acquises le semestre dernier : L'utilisation d'objets et de pointeurs force à la rigeur d'écriture, les fautes de segmentations ou la perte d'une variable par sortie d'un contexte sont des erreurs simples à commettre.
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=2]{Interface.png}}
+\caption{Menu principal du programme.}
+\label{Interface}
+\end{figure}
+
+\end{document}
