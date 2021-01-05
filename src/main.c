@@ -14,9 +14,9 @@ int main(){
 	
 	/*Main menu*/
 	while (quit == 0){
-		printmenu();
-		int UserInput = 0;
-		scanf("%d",&UserInput);
+		int UserInput = GetUserInput();
+		tempPInput = NULL;
+		tempRInput = NULL;
 		switch(UserInput){
 		
 			case 1 : //Create a new rule and add it to the fact base
@@ -30,6 +30,7 @@ int main(){
 				clrscr();
 				printf("New rule created : %s \n",tempRInput);
 				printKnowledgeBase(kb);
+				free(tempRInput);
 				break;
 				
 			case 2 : //Create a prop and add it to the pool
@@ -42,11 +43,10 @@ int main(){
 				UseraddProposition(PPool,tempPInput); // adding the Proposition to the Pool
 				clrscr();
 				printf("New Proposition created  : %s \n",tempPInput);
-				
+				free(tempPInput);
 				break;
 				
 			case 3 : //Add a props to a rule premisse
-			
 				clrscr();
 				tempRInput = GetRuleIDInput(); //Getting the rule
 				while(GetRule(kb,tempRInput) == NULL){
@@ -54,14 +54,17 @@ int main(){
 					tempRInput = GetRuleIDInput();
 				}
 				tempPInput = GetRulePropositionId();
-				while(GetProposition(PPool,tempPInput) == NULL){ //Checking if the proposition already exit
-					printf("This Proposition must exit to be added\n");
+				while(GetProposition(PPool,tempPInput) == NULL || SearchProposition(GetRule(kb,tempRInput),tempPInput) == true){ 
+					//Checking if the proposition already exit or is already in the premisse
+					printf("This Proposition must exist to be added in the Premisse\n");
+					printf("Also it shouldn't alredy be in it\n");
 					tempPInput = GetRulePropositionId();
 				}
 				kb = UseraddPremisse(kb,PPool,tempRInput,tempPInput);
 				clrscr();
-				printf("%s has been added to the premisse of R1%s\n",tempPInput,tempRInput);
-			 	
+				printf("%s has been added to the premisse of %s\n",tempPInput,tempRInput);
+			 	free(tempRInput);
+			 	free(tempPInput);
 			 	break;
 			 	
 			case 4 : //Add a props to a rule conclusion
@@ -79,7 +82,8 @@ int main(){
 				clrscr();
 				kb = UseraddConclusion(kb,PPool,tempRInput,tempPInput);
 				printf("%s is now the conclusion of %s\n",tempPInput,tempRInput);
-				
+				free(tempRInput);
+				free(tempPInput);
 				break;
 				
 			case 5 : //Make a prop true and add it to the fact base
@@ -98,7 +102,9 @@ int main(){
 					addFact(fb,P);
 					printf("%s was added to the fact base",tempPInput);
 				}
+				free(tempPInput);
 				break;
+				
 			case 6: //Run the engine
 				clrscr();
 				printKnowledgeBase(kb);
@@ -125,12 +131,32 @@ int main(){
 				quit = 1;
 				break;	
 				
-			default:
+			case 11 : //Remove an prop from the premisse of a rule
 				clrscr();
-				printf("Please enter a number between 1 and 6\n");
-				UserInput = 0;
+				tempRInput = GetRuleIDInput(); //Getting the rule
+				while(GetRule(kb,tempRInput) == NULL){
+					printf("This rule must be in the Knowledge base please choose another name\n");
+					tempRInput = GetRuleIDInput();
+				}
+				Rule * R = GetRule(kb,tempRInput);
+				tempPInput = GetRulePropositionId();
+				while(GetProposition(PPool,tempPInput) == NULL || SearchProposition(R,tempPInput) == false){ 
+				//Checking if the proposition already exit or is already in the premisse
+					printf("This Proposition must exist to be added in the Premisse\n");
+					printf("Also it should alredy be in it\n");
+					tempPInput = GetRulePropositionId();
+				}
+
+				deleteProposition(R,tempPInput);
+				clrscr();
+				printf("%s has been removed from the premisse of %s\n",tempPInput,tempRInput);
+				free(tempRInput);
+				free(tempPInput);
+				break;
+			default :
 				break;
 		}
+		
 	}
 
     return EXIT_SUCCESS;

@@ -20,6 +20,7 @@ void printmenu(){
 	printf("8 - Print the Knowleage base\n");
 	printf("9 - Print the Fact Base\n");
 	printf("10 - EXIT\n");
+	printf("11 - Remove a proposition from the premisse of a Rule\n");
 	printf("------------------------------------------- \n");
 	return;
 }
@@ -105,7 +106,7 @@ KB* UseraddRule(KB* kb,char* id){
       	return kb;
     }
     Rule * R = createEmptyRule();
-    R->name = id;
+    R->name = strcpy(R->name,id);
     kb = addRule(kb,R);
     return kb;
 }
@@ -116,7 +117,7 @@ FB* UseraddProposition(FB* fb,char* id){
       	return fb;
     }
     Proposition * P = createEmptyProposition();
-    P->id = id;
+    P->id = strcpy(P->id,id);
     P->value = false;
     fb = addFact(fb,P);
     return fb;
@@ -197,26 +198,35 @@ Proposition* GetProposition(FB* fb,char* id){
 }
     
 char* GetRuleIDInput(KB* kb){
-		char* Rname = (char*) malloc(sizeof(char)*255);
+	char* Rname = (char*) malloc(sizeof(char)*255);
 	do{	
 		printf("Please enter the rule (len< 15)\n");
 		scanf("%s",Rname);
-		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
-		return Rname;
+	}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
+	return Rname;
 }
 
 
 char* GetRulePropositionId(){
-		char* Rname = (char*) malloc(sizeof(char)*255);
+	char* Pname = (char*) malloc(sizeof(char)*255);
 	do{	
 		printf("Please enter the name of the Proposition (len< 15)\n");
-		scanf("%s",Rname);
-		}while (strcmp(Rname,"") == 0 || strlen(Rname) > 15);
-		return Rname;
+		scanf("%s",Pname);
+	}while (strcmp(Pname,"") == 0 || strlen(Pname) > 15);
+	return Pname;
 }	
 
 
-
+int GetUserInput(){
+	char* UserInput = (char*) malloc(sizeof(char)*255);
+	do{
+		printmenu();
+		scanf("%s",UserInput);
+	}while(atoi(UserInput) < 1 || atoi(UserInput) >11);
+	int output = atoi(UserInput);
+	free(UserInput);
+	return output;
+}
 
 void clrscr()
 {

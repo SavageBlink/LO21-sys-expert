@@ -130,7 +130,7 @@ Rule* addConclusion(Rule* R, Proposition* P){
   return R;
 }
 
-boolean searchProposition(Rule* R, char * id)
+boolean SearchProposition(Rule* R, char * id)
 {
 
 
@@ -151,7 +151,7 @@ boolean searchProposition(Rule* R, char * id)
       Rule* nR = createEmptyRule();
       nR->head = headRule(R)->next;
       addConclusion(nR, R->Conclusion);
-      return searchProposition(nR,id);
+      return SearchProposition(nR,id);
     }
 }
 

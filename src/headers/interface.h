@@ -11,6 +11,7 @@
 
 
 
+
 /**
 
  * @return NONE
@@ -100,15 +101,21 @@ Proposition* GetProposition(FB* fb,char* id);
 
 /**
  * @return A sanitized string from the user
- * @brief ask the user fir a rule name
+ * @brief ask the user for a rule name
  */
 char* GetRuleIDInput();
 
 /**
  * @return A sanitized string from the user
- * @brief ask the user fir a Proposition name
+ * @brief ask the user for a Proposition name
  */
 char* GetRulePropositionId();
+
+/**
+ * @return A sanitized int
+ * @brief ask the user for a number between 1-11
+ */
+int GetUserInput();
 
 /**
  *	@brief Clear the screen
